@@ -1,0 +1,13 @@
+.DS_Store
+
+target
+.classpath
+.project
+.settings
+.springBeans
+
+.idea
+*.ipr
+*.iml
+
+.svn
