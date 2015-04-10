@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <!-- ORDER -->
+    <changeSet author="mk3" id="1">
+        <createTable tableName="ORDER" remarks="ORDER">
+            <column name="ID" type="INTEGER" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="ORDER_PK" nullable="false"/>
+            </column>
+            <column name="REF_TABLE" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="STATUS" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint constraintName="FK_ORDER_REF_TABLE" baseTableName="ORDER" baseColumnNames="REF_TABLE" referencedTableName="TABLE" referencedColumnNames="ID"/>
+    </changeSet>
+
+    <!-- ORDER_DETAILS -->
+    <changeSet author="mk3" id="2">
+        <createTable tableName="ORDER_DETAILS" remarks="ORDER_DETAILS">
+            <column name="ID" type="INTEGER" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="ORDER_DETAILS_PK" nullable="false"/>
+            </column>
+            <column name="REF_ORDER" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="REF_MENU_ITEM" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="QUANTITY" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="COST_OF_ITEM" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="KOT" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="STATUS" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint constraintName="FK_ORDER_DETAILS_REF_MENU_ITEM" baseTableName="ORDER_DETAILS" baseColumnNames="REF_MENU_ITEM" referencedTableName="MENU_ITEM" referencedColumnNames="ID"/>
+        <addForeignKeyConstraint constraintName="FK_ORDER_DETAILS_REF_ORDER" baseTableName="ORDER_DETAILS" baseColumnNames="REF_ORDER" referencedTableName="ORDER" referencedColumnNames="ID"/>
+    </changeSet>
+
+</databaseChangeLog>

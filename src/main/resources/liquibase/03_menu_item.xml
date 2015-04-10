@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <!-- MENU_ITEM -->
+    <changeSet author="mk3" id="1">
+        <createTable tableName="MENU_ITEM" remarks="MENU_ITEM">
+            <column name="ID" type="INTEGER" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="MENU_ITEM_PK" nullable="false"/>
+            </column>
+            <column name="NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DESCRIPTION" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CODE" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ACTIVE" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PRICE" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SERVES" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- MENU_ITEM_DETAILS -->
+    <changeSet author="mk3" id="2">
+        <createTable tableName="MENU_ITEM_DETAILS" remarks="MENU_ITEM_DETAILS">
+            <column name="ID" type="INTEGER" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="MENU_ITEM_DETAILS_PK" nullable="false"/>
+            </column>
+            <column name="PHOTO" type="BLOB">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ETA_MINUTES" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="RATING" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="REF_MENU_ITEM" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint constraintName="FK_MENU_ITEM_DETAILS_REF_MENU_ITEM" baseTableName="MENU_ITEM_DETAILS" baseColumnNames="REF_MENU_ITEM" referencedTableName="MENU_ITEM" referencedColumnNames="ID"/>
+    </changeSet>
+</databaseChangeLog>

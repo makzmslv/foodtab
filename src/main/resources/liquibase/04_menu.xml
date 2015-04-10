@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <!-- MENU -->
+    <changeSet author="mk3" id="1">
+        <createTable tableName="MENU" remarks="MENU">
+            <column name="REF_MENU_ITEM" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="REF_CATEGORY" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint constraintName="FK_MENU_REF_MENU_ITEM" baseTableName="MENU" baseColumnNames="REF_MENU_ITEM" referencedTableName="MENU_ITEM" referencedColumnNames="ID"/>
+        <addForeignKeyConstraint constraintName="FK_MENU_REF_CATEGORY" baseTableName="MENU" baseColumnNames="REF_CATEGORY" referencedTableName="CATEGORY" referencedColumnNames="ID"/>
+    </changeSet>
+</databaseChangeLog>

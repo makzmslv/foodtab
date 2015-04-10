@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <!-- BILL -->
+    <changeSet author="mk3" id="1">
+        <createTable tableName="BILL" remarks="BILL">
+            <column name="ID" type="INTEGER" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="BILL_PK" nullable="false"/>
+            </column>
+            <column name="REF_TABLE" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="REF_ORDER" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="BILL_AMOUNT" type="DECIMAL(10,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TAX_APPLIED" type="DECIMAL(10,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TAX_AMOUNT" type="DECIMAL(10,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TOTAL_AMOUNT" type="DECIMAL(10,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TIMESTAMP" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint constraintName="FK_BILL_REF_TABLE" baseTableName="BILL" baseColumnNames="REF_TABLE" referencedTableName="TABLE" referencedColumnNames="ID"/>
+        <addForeignKeyConstraint constraintName="FK_BILL_REF_ORDER" baseTableName="BILL" baseColumnNames="REF_ORDER" referencedTableName="ORDER" referencedColumnNames="ID"/>
+    </changeSet>
+</databaseChangeLog>
