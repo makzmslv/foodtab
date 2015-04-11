@@ -1,7 +1,6 @@
 package com.focus.foodtab.persistence.entity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -25,7 +24,7 @@ public class TableEntity implements Serializable
     private int id;
 
     @Column(name = "TABLE_NO")
-    private BigDecimal tableNo;
+    private Integer tableNo;
 
     @Column(name = "ACTIVE")
     private Boolean active;
@@ -46,9 +45,14 @@ public class TableEntity implements Serializable
         this.id = id;
     }
 
-    public BigDecimal getTableNo()
+    public Integer getTableNo()
     {
         return tableNo;
+    }
+
+    public void setTableNo(Integer tableNo)
+    {
+        this.tableNo = tableNo;
     }
 
     public Boolean getActive()
@@ -69,11 +73,6 @@ public class TableEntity implements Serializable
     public void setBills(List<BillEntity> bills)
     {
         this.bills = bills;
-    }
-
-    public void setTableNo(BigDecimal tableNo)
-    {
-        this.tableNo = tableNo;
     }
 
     public List<OrderEntity> getOrders()
