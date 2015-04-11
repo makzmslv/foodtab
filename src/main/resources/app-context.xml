@@ -52,5 +52,7 @@
     </bean>
     <jpa:repositories base-package="com.focus.foodtab.persistence.dao" />
 
-
+    <!-- dozer -->
+    <bean id="org.dozer.Mapper" class="org.dozer.DozerBeanMapper">
+    </bean>
 </beans>
