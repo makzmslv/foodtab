@@ -2,6 +2,7 @@ package com.focus.foodtab.persistence.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,8 +15,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.joda.time.LocalDateTime;
 
 @Entity
 @Table(name = "BILL")
@@ -50,7 +49,7 @@ public class BillEntity implements Serializable
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "TIMESTAMP")
-    private LocalDateTime timestamp;
+    private Date timestamp;
 
     public int getId()
     {
@@ -122,12 +121,12 @@ public class BillEntity implements Serializable
         this.totalAmount = totalAmount;
     }
 
-    public LocalDateTime getTimestamp()
+    public Date getTimestamp()
     {
         return timestamp;
     }
 
-    public void setTimestamp(LocalDateTime timestamp)
+    public void setTimestamp(Date timestamp)
     {
         this.timestamp = timestamp;
     }

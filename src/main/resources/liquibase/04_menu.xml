@@ -7,6 +7,9 @@
     <!-- MENU -->
     <changeSet author="mk3" id="1">
         <createTable tableName="MENU" remarks="MENU">
+            <column name="ID" type="INTEGER" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="MENU_PK" nullable="false"/>
+            </column>
             <column name="REF_MENU_ITEM" type="INTEGER">
                 <constraints nullable="false"/>
             </column>
