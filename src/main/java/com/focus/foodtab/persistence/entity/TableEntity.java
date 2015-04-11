@@ -27,6 +27,9 @@ public class TableEntity implements Serializable
     @Column(name = "TABLE_NO")
     private BigDecimal tableNo;
 
+    @Column(name = "ACTIVE")
+    private Boolean active;
+
     @OneToMany(mappedBy = "table", cascade = CascadeType.ALL)
     private List<OrderEntity> orders;
 
@@ -46,6 +49,26 @@ public class TableEntity implements Serializable
     public BigDecimal getTableNo()
     {
         return tableNo;
+    }
+
+    public Boolean getActive()
+    {
+        return active;
+    }
+
+    public void setActive(Boolean active)
+    {
+        this.active = active;
+    }
+
+    public List<BillEntity> getBills()
+    {
+        return bills;
+    }
+
+    public void setBills(List<BillEntity> bills)
+    {
+        this.bills = bills;
     }
 
     public void setTableNo(BigDecimal tableNo)

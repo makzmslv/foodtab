@@ -54,7 +54,7 @@
     </changeSet>
 
     <!-- MENU_ITEM_UNIT -->
-    <changeSet author="mk3" id="1">
+    <changeSet author="mk3" id="3">
         <createTable tableName="MENU_ITEM_UNIT" remarks="MENU_ITEM_UNIT">
             <column name="ID" type="INTEGER" autoIncrement="true">
                 <constraints primaryKey="true" primaryKeyName="MENU_ITEM_UNIT_PK" nullable="false"/>

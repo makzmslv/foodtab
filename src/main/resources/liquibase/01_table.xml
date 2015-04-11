@@ -13,6 +13,9 @@
             <column name="TABLE_NO" type="INTEGER">
                 <constraints nullable="false"/>
             </column>
+            <column name="ACTIVE" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
 </databaseChangeLog>
