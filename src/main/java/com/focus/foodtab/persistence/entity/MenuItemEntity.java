@@ -1,6 +1,7 @@
 package com.focus.foodtab.persistence.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -8,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -39,6 +41,9 @@ public class MenuItemEntity implements Serializable
 
     @OneToOne(mappedBy = "menuItem", cascade = CascadeType.ALL)
     private MenuItemDetailsEntity menuItemDetails;
+
+    @OneToMany(mappedBy = "menuItem", cascade = CascadeType.ALL)
+    private List<MenuItemDetailsEntity> menuItemUnits;
 
     public int getId()
     {
@@ -108,6 +113,16 @@ public class MenuItemEntity implements Serializable
     public void setMenuItemDetails(MenuItemDetailsEntity menuItemDetails)
     {
         this.menuItemDetails = menuItemDetails;
+    }
+
+    public List<MenuItemDetailsEntity> getMenuItemUnits()
+    {
+        return menuItemUnits;
+    }
+
+    public void setMenuItemUnits(List<MenuItemDetailsEntity> menuItemUnits)
+    {
+        this.menuItemUnits = menuItemUnits;
     }
 
 }
