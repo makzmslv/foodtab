@@ -26,6 +26,9 @@ public class CategoryEntity implements Serializable
     @Column(name = "TYPE")
     private Integer type;
 
+    @Column(name = "SUB_TYPE")
+    private Integer subType;
+
     @Column(name = "DESCRIPTION")
     private String description;
 
@@ -63,6 +66,16 @@ public class CategoryEntity implements Serializable
     public void setType(Integer type)
     {
         this.type = type;
+    }
+
+    public Integer getSubType()
+    {
+        return subType;
+    }
+
+    public void setSubType(Integer subType)
+    {
+        this.subType = subType;
     }
 
     public String getDescription()

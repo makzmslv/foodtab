@@ -16,6 +16,9 @@
             <column name="TYPE" type="INTEGER">
                 <constraints nullable="false"/>
             </column>
+            <column name="SUB_TYPE" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
             <column name="DESCRIPTION" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
