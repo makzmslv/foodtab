@@ -22,7 +22,7 @@
             <column name="DESCRIPTION" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="DISPLAY_ORDER" type="INTEGER">
+            <column name="DISPLAY_RANK" type="INTEGER">
                 <constraints nullable="false"/>
             </column>
             <column name="ACTIVE" type="BOOLEAN">

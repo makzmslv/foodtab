@@ -1,49 +1,27 @@
-package com.focus.foodtab.persistence.entity;
+package com.focus.foodtab.service.dto;
 
-import java.io.Serializable;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name = "CATEGORY")
-public class CategoryEntity implements Serializable
+public class CategoryDTO
 {
-    private static final long serialVersionUID = 1L;
+    private Integer id;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
-    private int id;
-
-    @Column(name = "NAME")
     private String name;
 
-    @Column(name = "TYPE")
     private Integer type;
 
-    @Column(name = "SUB_TYPE")
     private Integer subType;
 
-    @Column(name = "DESCRIPTION")
     private String description;
 
-    @Column(name = "DISPLAY_RANK")
     private Integer displayRank;
 
-    @Column(name = "ACTIVE")
     private Boolean active;
 
-    public int getId()
+    public Integer getId()
     {
         return id;
     }
 
-    public void setId(int id)
+    public void setId(Integer id)
     {
         this.id = id;
     }
@@ -107,5 +85,4 @@ public class CategoryEntity implements Serializable
     {
         this.active = active;
     }
-
 }
