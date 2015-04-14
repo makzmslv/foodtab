@@ -29,10 +29,10 @@ public class TableServiceImpl
         return mapper.map(tableEntity, TableDTO.class);
     }
 
-    public TableDTO updateTable(TableDTO updateDTO)
+    public TableDTO updateTable(Integer tableId, TableDTO updateDTO)
     {
         validateUpdateTableInput(updateDTO);
-        TableEntity tableEntity = tableDAO.findOne(updateDTO.getId());
+        TableEntity tableEntity = tableDAO.findOne(tableId);
         tableEntity.setActive(updateDTO.getActive());
         tableEntity.setTableNo(updateDTO.getTableNo());
         return mapper.map(tableEntity, TableDTO.class);

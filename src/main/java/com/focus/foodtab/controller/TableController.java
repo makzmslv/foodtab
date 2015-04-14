@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,7 +15,7 @@ import com.focus.foodtab.service.dto.TableDTO;
 import com.focus.foodtab.service.impl.TableServiceImpl;
 
 @Controller
-@RequestMapping(value = "/table")
+@RequestMapping(value = "/tables")
 public class TableController
 {
     @Autowired
@@ -27,11 +28,11 @@ public class TableController
         return tableService.createTable(createDTO);
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseBody
-    public TableDTO updateTable(@RequestBody TableDTO updateDTO)
+    public TableDTO updateTable(@PathVariable Integer id, @RequestBody TableDTO updateDTO)
     {
-        return tableService.updateTable(updateDTO);
+        return tableService.updateTable(id, updateDTO);
     }
 
     @RequestMapping(method = RequestMethod.GET)
