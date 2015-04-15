@@ -1,4 +1,4 @@
-package com.focus.foodtab.common.util;
+package com.focus.foodtab.library.enums;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -7,8 +7,8 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.focus.foodtab.common.util.CategorySubType;
-import com.focus.foodtab.common.util.CategoryType;
+import com.focus.foodtab.library.enums.CategorySubType;
+import com.focus.foodtab.library.enums.CategoryType;
 import com.focus.foodtab.persistence.dao.CategoryDAO;
 import com.focus.foodtab.persistence.entity.CategoryEntity;
 import com.focus.foodtab.service.dto.CategoryDTO;
