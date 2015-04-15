@@ -7,7 +7,6 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.focus.foodtab.common.util.Validator;
 import com.focus.foodtab.persistence.dao.TableDAO;
 import com.focus.foodtab.persistence.entity.TableEntity;
 import com.focus.foodtab.service.dto.TableDTO;
@@ -63,8 +62,6 @@ public class TableServiceImpl
 
     private void validateCreateTableInput(TableDTO createDTO)
     {
-        Validator.checkIfNull(createDTO.getTableNo());
-        Validator.checkIfNull(createDTO.getActive());
         if (createDTO.getTableNo() < 0)
         {
             // TODO throw error
@@ -79,8 +76,6 @@ public class TableServiceImpl
 
     private void validateUpdateTableInput(TableDTO updateDTO)
     {
-        Validator.checkIfNull(updateDTO.getTableNo());
-        Validator.checkIfNull(updateDTO.getActive());
         TableEntity tableEntity = tableDAO.findOne(updateDTO.getId());
 
         if (tableEntity == null)
