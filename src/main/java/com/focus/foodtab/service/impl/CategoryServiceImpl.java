@@ -140,7 +140,7 @@ public class CategoryServiceImpl
 
     private void validateDisplayOrder(Integer displayOrder)
     {
-        CategoryEntity category = categoryDAO.findByDisplayOrder(displayOrder);
+        CategoryEntity category = categoryDAO.findByDisplayRank(displayOrder);
         if (category != null)
         {
             // TODO throw error

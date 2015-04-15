@@ -10,7 +10,7 @@ public interface CategoryDAO extends JpaRepository<CategoryEntity, Integer>
 {
     public CategoryEntity findByNameAndTypeAndSubType(String name, Integer type, Integer subType);
 
-    public CategoryEntity findByDisplayOrder(Integer displayOrder);
+    public CategoryEntity findByDisplayRank(Integer displayOrder);
 
     public List<CategoryEntity> findByActive(Boolean active);
 }
