@@ -17,7 +17,7 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-        <addForeignKeyConstraint constraintName="FK_ORDER_REF_TABLE" baseTableName="ORDER" baseColumnNames="REF_TABLE" referencedTableName="TABLE" referencedColumnNames="ID"/>
+        <addForeignKeyConstraint constraintName="FK_ORDER_REF_TABLE" baseTableName="ORDER" baseColumnNames="REF_TABLE" referencedTableName="TABLES" referencedColumnNames="ID"/>
     </changeSet>
 
     <!-- ORDER_DETAILS -->

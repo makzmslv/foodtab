@@ -32,7 +32,7 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-        <addForeignKeyConstraint constraintName="FK_BILL_REF_TABLE" baseTableName="BILL" baseColumnNames="REF_TABLE" referencedTableName="TABLE" referencedColumnNames="ID"/>
+        <addForeignKeyConstraint constraintName="FK_BILL_REF_TABLE" baseTableName="BILL" baseColumnNames="REF_TABLE" referencedTableName="TABLES" referencedColumnNames="ID"/>
         <addForeignKeyConstraint constraintName="FK_BILL_REF_ORDER" baseTableName="BILL" baseColumnNames="REF_ORDER" referencedTableName="ORDER" referencedColumnNames="ID"/>
     </changeSet>
 </databaseChangeLog>

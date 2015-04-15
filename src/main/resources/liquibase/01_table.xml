@@ -4,11 +4,11 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
-    <!-- TABLE -->
+    <!-- TABLES -->
     <changeSet author="mk3" id="1">
-        <createTable tableName="TABLE" remarks="TABLE">
+        <createTable tableName="TABLES" remarks="TABLES">
             <column name="ID" type="INTEGER" autoIncrement="true">
-                <constraints primaryKey="true" primaryKeyName="TABLE_PK" nullable="false"/>
+                <constraints primaryKey="true" primaryKeyName="TABLES_PK" nullable="false"/>
             </column>
             <column name="TABLE_NO" type="INTEGER">
                 <constraints nullable="false"/>
