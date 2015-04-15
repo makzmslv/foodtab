@@ -7,9 +7,12 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.focus.foodtab.library.enums.ErrorCodes;
 import com.focus.foodtab.persistence.dao.TableDAO;
 import com.focus.foodtab.persistence.entity.TableEntity;
 import com.focus.foodtab.service.dto.TableDTO;
+import com.focus.foodtab.service.error.ErrorMessage;
+import com.focus.foodtab.service.error.ServerException;
 
 @Service
 public class TableServiceImpl
@@ -64,12 +67,12 @@ public class TableServiceImpl
     {
         if (createDTO.getTableNo() < 0)
         {
-            // TODO throw error
+            throw new ServerException(new ErrorMessage(ErrorCodes.INVALID_TABLE_NO));
         }
         TableEntity tableEntity = tableDAO.findByTableNo(createDTO.getTableNo());
         if (tableEntity != null)
         {
-            // TODO throw error
+            throw new ServerException(new ErrorMessage(ErrorCodes.TABLE_ALREADY_EXISTS));
         }
 
     }
@@ -80,12 +83,12 @@ public class TableServiceImpl
 
         if (tableEntity == null)
         {
-            // TODO throw error
+            throw new ServerException(new ErrorMessage(ErrorCodes.TABLE_NOT_FOUND));
         }
 
         if (tableEntity.getTableNo().equals(updateDTO.getTableNo()) && tableEntity.getActive().equals(updateDTO.getActive()))
         {
-            // TODO throw error
+            throw new ServerException(new ErrorMessage(ErrorCodes.NO_FIELDS_UPDATED));
         }
         validateCreateTableInput(updateDTO);
 

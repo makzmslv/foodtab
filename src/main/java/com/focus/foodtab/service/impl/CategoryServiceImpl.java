@@ -9,10 +9,13 @@ import org.springframework.stereotype.Service;
 
 import com.focus.foodtab.library.enums.CategorySubType;
 import com.focus.foodtab.library.enums.CategoryType;
+import com.focus.foodtab.library.enums.ErrorCodes;
 import com.focus.foodtab.persistence.dao.CategoryDAO;
 import com.focus.foodtab.persistence.entity.CategoryEntity;
 import com.focus.foodtab.service.dto.CategoryDTO;
 import com.focus.foodtab.service.dto.CategoryUpdateDisplayOrderDTO;
+import com.focus.foodtab.service.error.ErrorMessage;
+import com.focus.foodtab.service.error.ServerException;
 
 @Service
 public class CategoryServiceImpl
@@ -80,7 +83,7 @@ public class CategoryServiceImpl
         CategoryEntity category = categoryDAO.findOne(categoryId);
         if (category == null)
         {
-            // TODO throw error
+            throw new ServerException(new ErrorMessage(ErrorCodes.CATEGORY_NOT_FOUND));
         }
         return category;
     }
@@ -97,11 +100,7 @@ public class CategoryServiceImpl
     {
         if (!CategoryType.getAllTypes().contains(categoryType))
         {
-            // TODO throw error
-        }
-        if (CategoryType.FOOD.getCode().equals(categoryType))
-        {
-            // TODO throw error
+            throw new ServerException(new ErrorMessage(ErrorCodes.INVALID_CATEGORY_TYPE));
         }
     }
 
@@ -109,14 +108,14 @@ public class CategoryServiceImpl
     {
         if (!CategorySubType.getAllSubTypes().contains(categorySubType))
         {
-            // TODO throw error
+            throw new ServerException(new ErrorMessage(ErrorCodes.INVALID_CATEGORY_SUB_TYPE));
         }
 
         if (CategoryType.FOOD.getCode().equals(categoryType))
         {
             if (!CategorySubType.getFoodSubTypes().contains(categorySubType))
             {
-                // TODO throw error
+                throw new ServerException(new ErrorMessage(ErrorCodes.CATEGORY_TYPE_SUB_TYPE_MISMATCH));
             }
         }
 
@@ -124,7 +123,7 @@ public class CategoryServiceImpl
         {
             if (!CategorySubType.getDrinkSubTypes().contains(categorySubType))
             {
-                // TODO throw error
+                throw new ServerException(new ErrorMessage(ErrorCodes.CATEGORY_TYPE_SUB_TYPE_MISMATCH));
             }
         }
     }
@@ -134,7 +133,7 @@ public class CategoryServiceImpl
         CategoryEntity category = categoryDAO.findByNameAndTypeAndSubType(createDTO.getName(), createDTO.getType(), createDTO.getSubType());
         if (category != null)
         {
-            // TODO throw error
+            throw new ServerException(new ErrorMessage(ErrorCodes.CATEGORY_ALREADY_EXISTS));
         }
     }
 
@@ -143,7 +142,7 @@ public class CategoryServiceImpl
         CategoryEntity category = categoryDAO.findByDisplayRank(displayOrder);
         if (category != null)
         {
-            // TODO throw error
+            throw new ServerException(new ErrorMessage(ErrorCodes.CATEGORY_TYPE_SUB_TYPE_MISMATCH));
         }
     }
 
