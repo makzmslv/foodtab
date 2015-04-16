@@ -95,31 +95,6 @@ public class ServerResponseHandler extends ResponseEntityExceptionHandler
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
-    // 500
-
-    @ExceptionHandler({ ServerException.class })
-    public ResponseEntity<Object> handleServerError(final ServerException ex, final WebRequest request)
-    {
-        Object body = null;
-        Throwable cause = ex.getCause();
-        if (cause != null)
-        {
-            ServerResponseEntity bodyOfResponse = new ServerResponseEntity(ex.getErrorMessage());
-            while (cause != null)
-            {
-                bodyOfResponse.add(cause.getMessage());
-                cause = cause.getCause();
-            }
-            body = bodyOfResponse;
-        }
-        else
-        {
-            body = ex.getErrorMessage();
-        }
-
-        return handleExceptionInternal(ex, body, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
-    }
-
     // all other exceptions based on RuntimeException
     @ExceptionHandler({ RuntimeException.class })
     public ResponseEntity<Object> handleInternal(final RuntimeException ex, final WebRequest request)
