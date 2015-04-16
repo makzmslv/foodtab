@@ -1,4 +1,4 @@
-package com.focus.foodtab.controller;
+package com.focus.foodtab.rest.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
