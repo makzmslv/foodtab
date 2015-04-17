@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.focus.foodtab.service.dto.TableDTO;
 import com.focus.foodtab.service.impl.TableServiceImpl;
+import com.wordnik.swagger.annotations.Api;
 
+@Api(value = "tables", description = "tables")
 @Controller
 @RequestMapping(value = "/tables")
 public class TableController

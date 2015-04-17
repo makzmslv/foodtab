@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.focus.foodtab.service.dto.CategoryDTO;
 import com.focus.foodtab.service.dto.CategoryUpdateDisplayOrderDTO;
 import com.focus.foodtab.service.impl.CategoryServiceImpl;
+import com.wordnik.swagger.annotations.Api;
 
+@Api(value = "categories", description = "categories")
 @Controller
 @RequestMapping(value = "/categories")
 public class CategoryController

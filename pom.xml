@@ -17,6 +17,7 @@
         <dozer.version>5.5.1</dozer.version>
         <org.aspectj-version>1.6.10</org.aspectj-version>
         <org.slf4j-version>1.6.6</org.slf4j-version>
+        <swagger-springmvc.version>0.9.4</swagger-springmvc.version>
     </properties>
     <dependencies>
         <!-- Spring -->
@@ -135,6 +136,20 @@
                     <groupId>org.slf4j</groupId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <dependency>
+    <groupId>com.google.guava</groupId>
+    <artifactId>guava</artifactId>
+    <version>18.0</version>
+</dependency>
+
+
+        <!-- swagger springmvc -->
+        <dependency>
+            <groupId>com.mangofactory</groupId>
+            <artifactId>swagger-springmvc</artifactId>
+            <version>${swagger-springmvc.version}</version>
         </dependency>
 
         <!-- AspectJ -->
