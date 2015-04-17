@@ -33,7 +33,7 @@ public class TableServiceImpl
 
     public TableDTO updateTable(Integer tableId, TableDTO updateDTO)
     {
-        validateUpdateTableInput(updateDTO);
+        validateUpdateTableInput(tableId, updateDTO);
         TableEntity tableEntity = tableDAO.findOne(tableId);
         tableEntity.setActive(updateDTO.getActive());
         tableEntity.setTableNo(updateDTO.getTableNo());
@@ -77,9 +77,9 @@ public class TableServiceImpl
 
     }
 
-    private void validateUpdateTableInput(TableDTO updateDTO)
+    private void validateUpdateTableInput(Integer tableId, TableDTO updateDTO)
     {
-        TableEntity tableEntity = tableDAO.findOne(updateDTO.getId());
+        TableEntity tableEntity = tableDAO.findOne(tableId);
 
         if (tableEntity == null)
         {
