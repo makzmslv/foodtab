@@ -62,8 +62,10 @@ public class CategoryServiceImpl
         {
             CategoryEntity category1 = getCategory(updateDTO.getCategoryId1());
             CategoryEntity category2 = getCategory(updateDTO.getCategoryId2());
-            category1.setDisplayRank(category2.getDisplayRank());
-            category2.setDisplayRank(category1.getDisplayRank());
+            Integer displayOrderCategory1 = category1.getDisplayRank();
+            Integer displayOrderCategory2 = category2.getDisplayRank();
+            category1.setDisplayRank(displayOrderCategory2);
+            category2.setDisplayRank(displayOrderCategory1);
             categoryDAO.save(category1);
             categoryDAO.save(category2);
             updatedCategories.add(mapper.map(category1, CategoryDTO.class));
