@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,17 +34,20 @@ public class MenuItemEntity implements Serializable
     @Column(name = "CODE")
     private Integer code;
 
+    @Column(name = "PRICE")
+    private Integer price;
+
     @Column(name = "ACTIVE")
     private Boolean active;
 
     @Column(name = "SERVES")
     private Integer serves;
 
-    @OneToOne(mappedBy = "menuItem", cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "menuItem", cascade = CascadeType.ALL)
     private MenuItemDetailsEntity menuItemDetails;
 
-    @OneToMany(mappedBy = "menuItem", cascade = CascadeType.ALL)
-    private List<MenuItemDetailsEntity> menuItemUnits;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "menuItem", cascade = CascadeType.ALL)
+    private List<MenuItemUnitEntity> menuItemUnits;
 
     public int getId()
     {
@@ -85,6 +89,16 @@ public class MenuItemEntity implements Serializable
         this.code = code;
     }
 
+    public Integer getPrice()
+    {
+        return price;
+    }
+
+    public void setPrice(Integer price)
+    {
+        this.price = price;
+    }
+
     public Boolean getActive()
     {
         return active;
@@ -115,12 +129,12 @@ public class MenuItemEntity implements Serializable
         this.menuItemDetails = menuItemDetails;
     }
 
-    public List<MenuItemDetailsEntity> getMenuItemUnits()
+    public List<MenuItemUnitEntity> getMenuItemUnits()
     {
         return menuItemUnits;
     }
 
-    public void setMenuItemUnits(List<MenuItemDetailsEntity> menuItemUnits)
+    public void setMenuItemUnits(List<MenuItemUnitEntity> menuItemUnits)
     {
         this.menuItemUnits = menuItemUnits;
     }

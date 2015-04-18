@@ -12,6 +12,7 @@ import com.focus.foodtab.persistence.dao.MenuDAO;
 import com.focus.foodtab.persistence.dao.MenuItemDAO;
 import com.focus.foodtab.persistence.entity.MenuEntity;
 import com.focus.foodtab.persistence.entity.MenuItemEntity;
+import com.focus.foodtab.persistence.entity.MenuItemUnitEntity;
 import com.focus.foodtab.service.dto.MenuItemDTO;
 import com.focus.foodtab.service.error.ErrorMessage;
 import com.focus.foodtab.service.error.ServerException;
@@ -32,6 +33,7 @@ public class MenuItemServiceImpl
     {
         validateInput(createDTO);
         MenuItemEntity menuItem = mapper.map(createDTO, MenuItemEntity.class);
+        setReferences(menuItem);
         menuItem = menuItemDAO.save(menuItem);
         return mapper.map(menuItem, MenuItemDTO.class);
     }
@@ -99,6 +101,15 @@ public class MenuItemServiceImpl
         if (menuItem != null)
         {
             throw new ServerException(new ErrorMessage(ErrorCodes.DUPLICATE_CODE_FOR_MENU_ITEM));
+        }
+    }
+
+    private void setReferences(MenuItemEntity menuItem)
+    {
+        menuItem.getMenuItemDetails().setMenuItem(menuItem);
+        for (MenuItemUnitEntity menuItemUnit : menuItem.getMenuItemUnits())
+        {
+            menuItemUnit.setMenuItem(menuItem);
         }
     }
 

@@ -4,6 +4,8 @@ import java.util.List;
 
 public class MenuItemDTO
 {
+    private Integer id;
+
     private String name;
 
     private String description;
@@ -16,9 +18,19 @@ public class MenuItemDTO
 
     private Integer serves;
 
-    private MenuItemDetailsDTO details;
+    private MenuItemDetailsDTO menuItemDetails;
 
-    private List<MenuItemUnitDTO> units;
+    private List<MenuItemUnitDTO> menuItemUnits;
+
+    public Integer getId()
+    {
+        return id;
+    }
+
+    public void setId(Integer id)
+    {
+        this.id = id;
+    }
 
     public String getName()
     {
@@ -80,23 +92,23 @@ public class MenuItemDTO
         this.serves = serves;
     }
 
-    public MenuItemDetailsDTO getDetails()
+    public MenuItemDetailsDTO getMenuItemDetails()
     {
-        return details;
+        return menuItemDetails;
     }
 
-    public void setDetails(MenuItemDetailsDTO details)
+    public void setMenuItemDetails(MenuItemDetailsDTO menuItemDetails)
     {
-        this.details = details;
+        this.menuItemDetails = menuItemDetails;
     }
 
-    public List<MenuItemUnitDTO> getUnits()
+    public List<MenuItemUnitDTO> getMenuItemUnits()
     {
-        return units;
+        return menuItemUnits;
     }
 
-    public void setUnits(List<MenuItemUnitDTO> units)
+    public void setMenuItemUnits(List<MenuItemUnitDTO> menuItemUnits)
     {
-        this.units = units;
+        this.menuItemUnits = menuItemUnits;
     }
 }

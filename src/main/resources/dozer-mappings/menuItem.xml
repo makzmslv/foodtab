@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+    <!--                                  -->
+    <!-- MenuItemEntity - MenuItemDTO -->
+    <!--                                  -->
+
+    <mapping>
+        <class-a>com.focus.foodtab.persistence.entity.MenuItemEntity</class-a>
+        <class-b>com.focus.foodtab.service.dto.MenuItemDTO</class-b>
+
+        <field>
+            <a>name</a>
+            <b>name</b>
+        </field>
+        <field>
+            <a>description</a>
+            <b>description</b>
+        </field>
+        <field>
+            <a>code</a>
+            <b>code</b>
+        </field>
+        <field>
+            <a>active</a>
+            <b>active</b>
+        </field>
+        <field>
+            <a>price</a>
+            <b>price</b>
+        </field>
+        <field>
+            <a>serves</a>
+            <b>serves</b>
+        </field>
+        <field>
+            <a>menuItemDetails</a>
+            <b>menuItemDetails</b>
+        </field>
+        <field>
+            <a>menuItemUnits</a>
+            <b>menuItemUnits</b>
+        </field>
+    </mapping>
+
+</mappings>
