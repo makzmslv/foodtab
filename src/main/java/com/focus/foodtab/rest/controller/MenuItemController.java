@@ -53,11 +53,11 @@ public class MenuItemController
         return menuItemService.findbyActiveStatus(active);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public void deleteMenuItem(@RequestBody Integer menuItemId)
+    public void deleteMenuItem(@PathVariable Integer id)
     {
-        menuItemService.deleteMenuItem(menuItemId);
+        menuItemService.deleteMenuItem(id);
     }
 
     @RequestMapping(value = "/{id}/menuitemunits", method = RequestMethod.POST)

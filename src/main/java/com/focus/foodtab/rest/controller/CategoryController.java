@@ -55,4 +55,11 @@ public class CategoryController
     {
         return categoryService.updateDisplayOrder(updateDTOs);
     }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public void deleteCategory(@PathVariable Integer id)
+    {
+        categoryService.deleteCategory(id);
+    }
 }

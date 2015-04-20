@@ -11,7 +11,9 @@ import com.focus.foodtab.library.enums.CategorySubType;
 import com.focus.foodtab.library.enums.CategoryType;
 import com.focus.foodtab.library.enums.ErrorCodes;
 import com.focus.foodtab.persistence.dao.CategoryDAO;
+import com.focus.foodtab.persistence.dao.MenuDAO;
 import com.focus.foodtab.persistence.entity.CategoryEntity;
+import com.focus.foodtab.persistence.entity.MenuEntity;
 import com.focus.foodtab.service.dto.CategoryDTO;
 import com.focus.foodtab.service.dto.CategoryUpdateDisplayOrderDTO;
 import com.focus.foodtab.service.error.ErrorMessage;
@@ -22,6 +24,9 @@ public class CategoryServiceImpl
 {
     @Autowired
     private CategoryDAO categoryDAO;
+
+    @Autowired
+    private MenuDAO menuDAO;
 
     @Autowired
     private DozerBeanMapper mapper;
@@ -74,10 +79,19 @@ public class CategoryServiceImpl
         return updatedCategories;
     }
 
-    private void validateUpdateDTO(Integer categoryId, CategoryDTO updateDTO)
+    public void deleteCategory(Integer categoryId)
     {
-        getCategory(categoryId);
-        validateInputForCreateDTO(updateDTO);
+        CategoryEntity category = getCategory(categoryId);
+        if (category.getActive())
+        {
+            throw new ServerException(new ErrorMessage(ErrorCodes.CATEGORY_ACTIVE));
+        }
+        List<MenuEntity> menu = menuDAO.findByCategory(category);
+        if (!menu.isEmpty())
+        {
+            throw new ServerException(new ErrorMessage(ErrorCodes.CATEGORY_IN_USE));
+        }
+        categoryDAO.delete(category);
     }
 
     private CategoryEntity getCategory(Integer categoryId)
@@ -96,6 +110,12 @@ public class CategoryServiceImpl
         validateSubType(createDTO.getType(), createDTO.getSubType());
         checkIfDuplicateEntryExists(createDTO);
         validateDisplayOrder(createDTO.getDisplayRank());
+    }
+
+    private void validateUpdateDTO(Integer categoryId, CategoryDTO updateDTO)
+    {
+        getCategory(categoryId);
+        validateInputForCreateDTO(updateDTO);
     }
 
     private void validateType(Integer categoryType)

@@ -18,6 +18,8 @@ public enum ErrorCodes
     CATEGORY_TYPE_SUB_TYPE_MISMATCH(204, "Category Type and Sub Type do not match"),
     CATEGORY_ALREADY_EXISTS(205, "Category with given type and sub type already exists"),
     INVALID_CATEGORY_DISPLAY_RANK(206, "Category with given display order already exists"),
+    CATEGORY_ACTIVE(207, "Cannot delete Category as it is still ACTIVE"),
+    CATEGORY_IN_USE(208, "Cannot delete Category as it is still being used"),
 
     // menuItem
     MENU_ITEM_NOT_FOUND(301, "Menu Item does not exist"),
