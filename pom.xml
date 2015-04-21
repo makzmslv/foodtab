@@ -280,8 +280,8 @@
                     <changeLogFile>src/main/resources/liquibase/master.xml</changeLogFile>
                     <driver>com.mysql.jdbc.Driver</driver>
                     <url>jdbc:mysql://localhost:3306/foodtab</url>
-                    <username>root</username>
-                    <password>neptune</password>
+                    <username>focus</username>
+                    <password>focus</password>
                     <defaultSchemaName>foodtab</defaultSchemaName>
                     <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
                 </configuration>
