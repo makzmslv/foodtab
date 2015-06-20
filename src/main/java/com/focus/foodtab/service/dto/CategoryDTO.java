@@ -3,11 +3,13 @@ package com.focus.foodtab.service.dto;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class CategoryDTO
 {
     private Integer id;
 
-    @NotNull
+    @NotEmpty
     private String name;
 
     @NotNull
@@ -16,7 +18,7 @@ public class CategoryDTO
     @NotNull
     private Integer subType;
 
-    @NotNull
+    @NotEmpty
     private String description;
 
     @NotNull

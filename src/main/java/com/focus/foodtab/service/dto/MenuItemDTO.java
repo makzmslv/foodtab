@@ -2,18 +2,21 @@ package com.focus.foodtab.service.dto;
 
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 public class MenuItemDTO
 {
     private Integer id;
 
-    @NotNull
+    @NotEmpty
     private String name;
 
-    @NotNull
+    @NotEmpty
     private String description;
 
     @NotNull
@@ -32,8 +35,12 @@ public class MenuItemDTO
     @Min(1)
     private Integer serves;
 
+    @NotNull
+    @Valid
     private MenuItemDetailsDTO menuItemDetails;
 
+    @NotNull
+    @Valid
     private List<MenuItemUnitDTO> menuItemUnits;
 
     public Integer getId()
