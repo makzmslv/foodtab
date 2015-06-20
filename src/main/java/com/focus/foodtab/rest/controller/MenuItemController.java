@@ -2,6 +2,8 @@ package com.focus.foodtab.rest.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,14 +32,14 @@ public class MenuItemController
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public MenuItemDTO createMenuItem(@RequestBody MenuItemDTO createDTO)
+    public MenuItemDTO createMenuItem(@Valid @RequestBody MenuItemDTO createDTO)
     {
         return menuItemService.createMenuItem(createDTO);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseBody
-    public MenuItemDTO updateMenuItem(@PathVariable Integer id, @RequestBody MenuItemDTO updateDTO)
+    public MenuItemDTO updateMenuItem(@PathVariable Integer id, @Valid @RequestBody MenuItemDTO updateDTO)
     {
         return menuItemService.updateMenuItem(id, updateDTO);
     }
@@ -62,14 +64,14 @@ public class MenuItemController
 
     @RequestMapping(value = "/{id}/menuitemunits", method = RequestMethod.POST)
     @ResponseBody
-    public MenuItemUnitDTO createMenuItemUnit(@PathVariable Integer id, @RequestBody MenuItemUnitDTO createDTO)
+    public MenuItemUnitDTO createMenuItemUnit(@PathVariable Integer id, @Valid @RequestBody MenuItemUnitDTO createDTO)
     {
         return menuItemUnitService.createMenuItemUnit(id, createDTO);
     }
 
-    @RequestMapping(value = "/{id}/menuitemunits/{unitId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}/menuitemunits/{unitId}", method = RequestMethod.PUT)
     @ResponseBody
-    public MenuItemUnitDTO updateMenuItemUnit(@PathVariable Integer id, Integer unitId, @RequestBody MenuItemUnitDTO createDTO)
+    public MenuItemUnitDTO updateMenuItemUnit(@PathVariable Integer id, Integer unitId, @Valid @RequestBody MenuItemUnitDTO createDTO)
     {
         return menuItemUnitService.updateMenuItemUnit(id, unitId, createDTO);
     }

@@ -2,6 +2,8 @@ package com.focus.foodtab.rest.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +28,7 @@ public class CategoryController
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public CategoryDTO createCategory(@RequestBody CategoryDTO createDTO)
+    public CategoryDTO createCategory(@Valid @RequestBody CategoryDTO createDTO)
     {
         return categoryService.createCategory(createDTO);
     }
@@ -44,7 +46,7 @@ public class CategoryController
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseBody
-    public CategoryDTO updateCategory(@PathVariable Integer id, @RequestBody CategoryDTO updateDTO)
+    public CategoryDTO updateCategory(@PathVariable Integer id, @Valid @RequestBody CategoryDTO updateDTO)
     {
         return categoryService.updateCategory(id, updateDTO);
     }

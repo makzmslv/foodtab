@@ -1,19 +1,29 @@
 package com.focus.foodtab.service.dto;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 public class CategoryDTO
 {
     private Integer id;
 
+    @NotNull
     private String name;
 
+    @NotNull
     private Integer type;
 
+    @NotNull
     private Integer subType;
 
+    @NotNull
     private String description;
 
+    @NotNull
+    @Min(0)
     private Integer displayRank;
 
+    @NotNull
     private Boolean active;
 
     public Integer getId()

@@ -109,13 +109,15 @@ public class CategoryServiceImpl
         validateType(createDTO.getType());
         validateSubType(createDTO.getType(), createDTO.getSubType());
         checkIfDuplicateEntryExists(createDTO);
-        validateDisplayOrder(createDTO.getDisplayRank());
+        checkIfDisplayRankAlreadyUsed(createDTO.getDisplayRank());
     }
 
     private void validateUpdateDTO(Integer categoryId, CategoryDTO updateDTO)
     {
-        getCategory(categoryId);
-        validateInputForCreateDTO(updateDTO);
+        CategoryEntity categoryEntity = getCategory(categoryId);
+        validateType(updateDTO.getType());
+        validateSubType(updateDTO.getType(), updateDTO.getSubType());
+        checkIfDisplayRankIsUpdated(updateDTO, categoryEntity);
     }
 
     private void validateType(Integer categoryType)
@@ -159,12 +161,20 @@ public class CategoryServiceImpl
         }
     }
 
-    private void validateDisplayOrder(Integer displayOrder)
+    private void checkIfDisplayRankAlreadyUsed(Integer displayOrder)
     {
         CategoryEntity category = categoryDAO.findByDisplayRank(displayOrder);
         if (category != null)
         {
-            throw new ServerException(new ErrorMessage(ErrorCodes.CATEGORY_TYPE_SUB_TYPE_MISMATCH));
+            throw new ServerException(new ErrorMessage(ErrorCodes.INVALID_CATEGORY_DISPLAY_RANK));
+        }
+    }
+
+    private void checkIfDisplayRankIsUpdated(CategoryDTO updateDTO, CategoryEntity categoryEntity)
+    {
+        if (categoryEntity.getDisplayRank() != updateDTO.getDisplayRank())
+        {
+            throw new ServerException(new ErrorMessage(ErrorCodes.DISPLAY_RANK_CANNOT_BE_UPDATED));
         }
     }
 

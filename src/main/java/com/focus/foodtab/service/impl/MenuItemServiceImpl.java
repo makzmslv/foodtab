@@ -31,7 +31,7 @@ public class MenuItemServiceImpl
 
     public MenuItemDTO createMenuItem(MenuItemDTO createDTO)
     {
-        validateInput(createDTO);
+        validateCreateDTO(createDTO);
         MenuItemEntity menuItem = mapper.map(createDTO, MenuItemEntity.class);
         setReferences(menuItem);
         menuItem = menuItemDAO.save(menuItem);
@@ -41,7 +41,7 @@ public class MenuItemServiceImpl
     public MenuItemDTO updateMenuItem(Integer menuItemId, MenuItemDTO updateDTO)
     {
         MenuItemEntity menuItem = getMenuItem(menuItemId);
-        validateInput(updateDTO);
+        validateUpdateDTO(updateDTO, menuItem);
         menuItem = mapper.map(updateDTO, MenuItemEntity.class);
         menuItemDAO.save(menuItem);
         return mapper.map(menuItem, MenuItemDTO.class);
@@ -80,10 +80,22 @@ public class MenuItemServiceImpl
         return menuItem;
     }
 
-    private void validateInput(MenuItemDTO createDTO)
+    private void validateCreateDTO(MenuItemDTO createDTO)
     {
         validateName(createDTO.getName());
         validateCode(createDTO.getCode());
+    }
+
+    private void validateUpdateDTO(MenuItemDTO updateDTO, MenuItemEntity menuItem)
+    {
+        if (menuItem.getName() != updateDTO.getName())
+        {
+            validateName(updateDTO.getName());
+        }
+        if (menuItem.getCode() != updateDTO.getCode())
+        {
+            validateCode(updateDTO.getCode());
+        }
     }
 
     private void validateName(String name)

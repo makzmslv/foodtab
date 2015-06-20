@@ -65,10 +65,6 @@ public class TableServiceImpl
 
     private void validateCreateTableInput(TableDTO createDTO)
     {
-        if (createDTO.getTableNo() < 0)
-        {
-            throw new ServerException(new ErrorMessage(ErrorCodes.INVALID_TABLE_NO));
-        }
         TableEntity tableEntity = tableDAO.findByTableNo(createDTO.getTableNo());
         if (tableEntity != null)
         {
@@ -90,7 +86,6 @@ public class TableServiceImpl
         {
             throw new ServerException(new ErrorMessage(ErrorCodes.NO_FIELDS_UPDATED));
         }
-        validateCreateTableInput(updateDTO);
 
     }
 }

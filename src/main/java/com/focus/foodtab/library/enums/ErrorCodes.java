@@ -12,14 +12,15 @@ public enum ErrorCodes
     TABLE_ALREADY_EXISTS(102, "Table with Table No already exists"),
 
     // category
-    CATEGORY_NOT_FOUND(201, "Cateogry does not exist"),
-    INVALID_CATEGORY_TYPE(202, "Invalid Cateogry Type"),
-    INVALID_CATEGORY_SUB_TYPE(203, "Invalid Cateogry Sub Type"),
+    CATEGORY_NOT_FOUND(201, "Category does not exist"),
+    INVALID_CATEGORY_TYPE(202, "Invalid Category Type"),
+    INVALID_CATEGORY_SUB_TYPE(203, "Invalid Category Sub Type"),
     CATEGORY_TYPE_SUB_TYPE_MISMATCH(204, "Category Type and Sub Type do not match"),
     CATEGORY_ALREADY_EXISTS(205, "Category with given type and sub type already exists"),
     INVALID_CATEGORY_DISPLAY_RANK(206, "Category with given display order already exists"),
     CATEGORY_ACTIVE(207, "Cannot delete Category as it is still ACTIVE"),
     CATEGORY_IN_USE(208, "Cannot delete Category as it is still being used"),
+    DISPLAY_RANK_CANNOT_BE_UPDATED(209, "Cannot update Category Display Rank from this service."),
 
     // menuItem
     MENU_ITEM_NOT_FOUND(301, "Menu Item does not exist"),

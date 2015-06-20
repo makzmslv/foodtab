@@ -2,20 +2,34 @@ package com.focus.foodtab.service.dto;
 
 import java.util.List;
 
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 public class MenuItemDTO
 {
     private Integer id;
 
+    @NotNull
     private String name;
 
+    @NotNull
     private String description;
 
+    @NotNull
+    @Min(0)
     private Integer code;
 
+    @NotNull
     private Boolean active;
 
+    @NotNull
+    @Min(0)
+    @Digits(integer = 4, fraction = 0)
     private Integer price;
 
+    @NotNull
+    @Min(1)
     private Integer serves;
 
     private MenuItemDetailsDTO menuItemDetails;
