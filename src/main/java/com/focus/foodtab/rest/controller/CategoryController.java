@@ -35,7 +35,7 @@ public class CategoryController
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public List<CategoryDTO> getTables(@RequestParam(required = false) Boolean active)
+    public List<CategoryDTO> getCategories(@RequestParam(required = false) Boolean active)
     {
         if (active == null)
         {
