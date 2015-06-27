@@ -1,46 +1,25 @@
-package com.focus.foodtab.service.dto;
+package com.focus.foodtab.dto.menuitem;
 
 import java.util.List;
-
-import javax.validation.Valid;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 public class MenuItemDTO
 {
     private Integer id;
 
-    @NotEmpty
     private String name;
 
-    @NotEmpty
     private String description;
 
-    @NotNull
-    @Min(0)
     private Integer code;
 
-    @NotNull
     private Boolean active;
 
-    @NotNull
-    @Min(0)
-    @Digits(integer = 4, fraction = 0)
     private Integer price;
 
-    @NotNull
-    @Min(1)
     private Integer serves;
 
-    @NotNull
-    @Valid
     private MenuItemDetailsDTO menuItemDetails;
 
-    @NotNull
-    @Valid
     private List<MenuItemUnitDTO> menuItemUnits;
 
     public Integer getId()

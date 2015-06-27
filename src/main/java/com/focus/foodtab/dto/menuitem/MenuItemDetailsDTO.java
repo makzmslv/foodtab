@@ -1,4 +1,4 @@
-package com.focus.foodtab.service.dto;
+package com.focus.foodtab.dto.menuitem;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;

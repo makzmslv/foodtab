@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.focus.foodtab.service.dto.MenuItemDTO;
-import com.focus.foodtab.service.dto.MenuItemUnitDTO;
+import com.focus.foodtab.dto.menuitem.MenuItemCreateDTO;
+import com.focus.foodtab.dto.menuitem.MenuItemDTO;
+import com.focus.foodtab.dto.menuitem.MenuItemUnitDTO;
 import com.focus.foodtab.service.impl.MenuItemServiceImpl;
 import com.focus.foodtab.service.impl.MenuItemUnitServiceImpl;
 import com.wordnik.swagger.annotations.Api;
@@ -32,14 +33,14 @@ public class MenuItemController
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public MenuItemDTO createMenuItem(@Valid @RequestBody MenuItemDTO createDTO)
+    public MenuItemDTO createMenuItem(@Valid @RequestBody MenuItemCreateDTO createDTO)
     {
         return menuItemService.createMenuItem(createDTO);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseBody
-    public MenuItemDTO updateMenuItem(@PathVariable Integer id, @Valid @RequestBody MenuItemDTO updateDTO)
+    public MenuItemDTO updateMenuItem(@PathVariable Integer id, @Valid @RequestBody MenuItemCreateDTO updateDTO)
     {
         return menuItemService.updateMenuItem(id, updateDTO);
     }

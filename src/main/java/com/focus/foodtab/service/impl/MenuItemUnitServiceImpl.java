@@ -4,12 +4,12 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.focus.foodtab.dto.menuitem.MenuItemUnitDTO;
 import com.focus.foodtab.library.enums.ErrorCodes;
 import com.focus.foodtab.persistence.dao.MenuItemDAO;
 import com.focus.foodtab.persistence.dao.MenuItemUnitDAO;
 import com.focus.foodtab.persistence.entity.MenuItemEntity;
 import com.focus.foodtab.persistence.entity.MenuItemUnitEntity;
-import com.focus.foodtab.service.dto.MenuItemUnitDTO;
 import com.focus.foodtab.service.error.ErrorMessage;
 import com.focus.foodtab.service.error.ServerException;
 

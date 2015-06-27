@@ -7,13 +7,14 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.focus.foodtab.dto.menuitem.MenuItemCreateDTO;
+import com.focus.foodtab.dto.menuitem.MenuItemDTO;
 import com.focus.foodtab.library.enums.ErrorCodes;
 import com.focus.foodtab.persistence.dao.MenuDAO;
 import com.focus.foodtab.persistence.dao.MenuItemDAO;
 import com.focus.foodtab.persistence.entity.MenuEntity;
 import com.focus.foodtab.persistence.entity.MenuItemEntity;
 import com.focus.foodtab.persistence.entity.MenuItemUnitEntity;
-import com.focus.foodtab.service.dto.MenuItemDTO;
 import com.focus.foodtab.service.error.ErrorMessage;
 import com.focus.foodtab.service.error.ServerException;
 
@@ -29,7 +30,7 @@ public class MenuItemServiceImpl
     @Autowired
     private DozerBeanMapper mapper;
 
-    public MenuItemDTO createMenuItem(MenuItemDTO createDTO)
+    public MenuItemDTO createMenuItem(MenuItemCreateDTO createDTO)
     {
         validateCreateDTO(createDTO);
         MenuItemEntity menuItem = mapper.map(createDTO, MenuItemEntity.class);
@@ -38,7 +39,7 @@ public class MenuItemServiceImpl
         return mapper.map(menuItem, MenuItemDTO.class);
     }
 
-    public MenuItemDTO updateMenuItem(Integer menuItemId, MenuItemDTO updateDTO)
+    public MenuItemDTO updateMenuItem(Integer menuItemId, MenuItemCreateDTO updateDTO)
     {
         MenuItemEntity menuItem = getMenuItem(menuItemId);
         validateUpdateDTO(updateDTO, menuItem);
@@ -80,13 +81,13 @@ public class MenuItemServiceImpl
         return menuItem;
     }
 
-    private void validateCreateDTO(MenuItemDTO createDTO)
+    private void validateCreateDTO(MenuItemCreateDTO createDTO)
     {
         validateName(createDTO.getName());
         validateCode(createDTO.getCode());
     }
 
-    private void validateUpdateDTO(MenuItemDTO updateDTO, MenuItemEntity menuItem)
+    private void validateUpdateDTO(MenuItemCreateDTO updateDTO, MenuItemEntity menuItem)
     {
         if (menuItem.getName() != updateDTO.getName())
         {
@@ -127,13 +128,13 @@ public class MenuItemServiceImpl
 
     private List<MenuItemDTO> mapEntityListToDTOs(List<MenuItemEntity> menuItems)
     {
-        List<MenuItemDTO> menuItemDTOs = new ArrayList<MenuItemDTO>();
+        List<MenuItemDTO> menuItemCreateDTOs = new ArrayList<MenuItemDTO>();
         for (MenuItemEntity menuItem : menuItems)
         {
             MenuItemDTO dto = mapper.map(menuItem, MenuItemDTO.class);
-            menuItemDTOs.add(dto);
+            menuItemCreateDTOs.add(dto);
         }
-        return menuItemDTOs;
+        return menuItemCreateDTOs;
     }
 
 }
