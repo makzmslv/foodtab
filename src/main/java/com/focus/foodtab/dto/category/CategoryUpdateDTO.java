@@ -1,4 +1,4 @@
-package com.focus.foodtab.service.dto.category;
+package com.focus.foodtab.dto.category;
 
 import javax.validation.constraints.NotNull;
 

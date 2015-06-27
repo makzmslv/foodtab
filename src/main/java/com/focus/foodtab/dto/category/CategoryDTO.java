@@ -1,29 +1,30 @@
-package com.focus.foodtab.service.dto.category;
+package com.focus.foodtab.dto.category;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.NotEmpty;
-
-public class CategoryCreateDTO
+public class CategoryDTO
 {
-    @NotEmpty
+    private Integer id;
+
     private String name;
 
-    @NotNull
     private Integer type;
 
-    @NotNull
     private Integer subType;
 
     private String description;
 
-    @NotNull
-    @Min(0)
     private Integer displayRank;
 
-    @NotNull
     private Boolean active;
+
+    public Integer getId()
+    {
+        return id;
+    }
+
+    public void setId(Integer id)
+    {
+        this.id = id;
+    }
 
     public String getName()
     {

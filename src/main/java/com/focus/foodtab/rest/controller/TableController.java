@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.focus.foodtab.service.dto.TableDTO;
+import com.focus.foodtab.dto.table.TableCreateDTO;
+import com.focus.foodtab.dto.table.TableDTO;
+import com.focus.foodtab.dto.table.TableUpdateDTO;
 import com.focus.foodtab.service.impl.TableServiceImpl;
 import com.wordnik.swagger.annotations.Api;
 
@@ -27,16 +29,16 @@ public class TableController
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public TableDTO createTable(@Valid @RequestBody TableDTO createDTO)
+    public TableDTO createTable(@Valid @RequestBody TableCreateDTO createDTO)
     {
         return tableService.createTable(createDTO);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{tableNo}", method = RequestMethod.PUT)
     @ResponseBody
-    public TableDTO updateTable(@PathVariable Integer id, @Valid @RequestBody TableDTO updateDTO)
+    public TableDTO updateTable(@PathVariable Integer tableNo, @Valid @RequestBody TableUpdateDTO updateDTO)
     {
-        return tableService.updateTable(id, updateDTO);
+        return tableService.updateTable(tableNo, updateDTO);
     }
 
     @RequestMapping(method = RequestMethod.GET)

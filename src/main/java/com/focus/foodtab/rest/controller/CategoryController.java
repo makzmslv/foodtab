@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.focus.foodtab.service.dto.category.CategoryCreateDTO;
-import com.focus.foodtab.service.dto.category.CategoryDTO;
-import com.focus.foodtab.service.dto.category.CategoryUpdateDTO;
-import com.focus.foodtab.service.dto.category.CategoryUpdateDisplayOrderDTO;
+import com.focus.foodtab.dto.category.CategoryCreateDTO;
+import com.focus.foodtab.dto.category.CategoryDTO;
+import com.focus.foodtab.dto.category.CategoryUpdateDTO;
+import com.focus.foodtab.dto.category.CategoryUpdateDisplayOrderDTO;
 import com.focus.foodtab.service.impl.CategoryServiceImpl;
 import com.wordnik.swagger.annotations.Api;
 

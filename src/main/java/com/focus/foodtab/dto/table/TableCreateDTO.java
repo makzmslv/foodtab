@@ -1,28 +1,16 @@
-package com.focus.foodtab.service.dto;
+package com.focus.foodtab.dto.table;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-public class TableDTO
+public class TableCreateDTO
 {
-    private Integer id;
-
     @NotNull
     @Min(0)
     private Integer tableNo;
 
     @NotNull
     private Boolean active;
-
-    public Integer getId()
-    {
-        return id;
-    }
-
-    public void setId(Integer id)
-    {
-        this.id = id;
-    }
 
     public Integer getTableNo()
     {

@@ -7,10 +7,12 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.focus.foodtab.dto.table.TableCreateDTO;
+import com.focus.foodtab.dto.table.TableDTO;
+import com.focus.foodtab.dto.table.TableUpdateDTO;
 import com.focus.foodtab.library.enums.ErrorCodes;
 import com.focus.foodtab.persistence.dao.TableDAO;
 import com.focus.foodtab.persistence.entity.TableEntity;
-import com.focus.foodtab.service.dto.TableDTO;
 import com.focus.foodtab.service.error.ErrorMessage;
 import com.focus.foodtab.service.error.ServerException;
 
@@ -23,7 +25,7 @@ public class TableServiceImpl
     @Autowired
     private DozerBeanMapper mapper;
 
-    public TableDTO createTable(TableDTO createDTO)
+    public TableDTO createTable(TableCreateDTO createDTO)
     {
         validateCreateTableInput(createDTO);
         TableEntity tableEntity = mapper.map(createDTO, TableEntity.class);
@@ -31,12 +33,12 @@ public class TableServiceImpl
         return mapper.map(tableEntity, TableDTO.class);
     }
 
-    public TableDTO updateTable(Integer tableId, TableDTO updateDTO)
+    public TableDTO updateTable(Integer tableNo, TableUpdateDTO updateDTO)
     {
-        validateUpdateTableInput(tableId, updateDTO);
-        TableEntity tableEntity = tableDAO.findOne(tableId);
+        validateUpdateTableInput(tableNo, updateDTO);
+        TableEntity tableEntity = tableDAO.findByTableNo(tableNo);
         tableEntity.setActive(updateDTO.getActive());
-        tableEntity.setTableNo(updateDTO.getTableNo());
+        tableEntity = tableDAO.save(tableEntity);
         return mapper.map(tableEntity, TableDTO.class);
     }
 
@@ -54,16 +56,16 @@ public class TableServiceImpl
 
     private List<TableDTO> mapEntityListToDTOs(List<TableEntity> tables)
     {
-        List<TableDTO> tableDTOs = new ArrayList<TableDTO>();
+        List<TableDTO> tableCreateDTOs = new ArrayList<TableDTO>();
         for (TableEntity table : tables)
         {
             TableDTO dto = mapper.map(table, TableDTO.class);
-            tableDTOs.add(dto);
+            tableCreateDTOs.add(dto);
         }
-        return tableDTOs;
+        return tableCreateDTOs;
     }
 
-    private void validateCreateTableInput(TableDTO createDTO)
+    private void validateCreateTableInput(TableCreateDTO createDTO)
     {
         TableEntity tableEntity = tableDAO.findByTableNo(createDTO.getTableNo());
         if (tableEntity != null)
@@ -73,16 +75,16 @@ public class TableServiceImpl
 
     }
 
-    private void validateUpdateTableInput(Integer tableId, TableDTO updateDTO)
+    private void validateUpdateTableInput(Integer tableNo, TableUpdateDTO updateDTO)
     {
-        TableEntity tableEntity = tableDAO.findOne(tableId);
+        TableEntity tableEntity = tableDAO.findByTableNo(tableNo);
 
         if (tableEntity == null)
         {
             throw new ServerException(new ErrorMessage(ErrorCodes.TABLE_NOT_FOUND));
         }
 
-        if (tableEntity.getTableNo().equals(updateDTO.getTableNo()) && tableEntity.getActive().equals(updateDTO.getActive()))
+        if (tableEntity.getActive().equals(updateDTO.getActive()))
         {
             throw new ServerException(new ErrorMessage(ErrorCodes.NO_FIELDS_UPDATED));
         }
