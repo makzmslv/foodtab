@@ -14,8 +14,10 @@ import com.focus.foodtab.persistence.dao.CategoryDAO;
 import com.focus.foodtab.persistence.dao.MenuDAO;
 import com.focus.foodtab.persistence.entity.CategoryEntity;
 import com.focus.foodtab.persistence.entity.MenuEntity;
-import com.focus.foodtab.service.dto.CategoryDTO;
-import com.focus.foodtab.service.dto.CategoryUpdateDisplayOrderDTO;
+import com.focus.foodtab.service.dto.category.CategoryCreateDTO;
+import com.focus.foodtab.service.dto.category.CategoryDTO;
+import com.focus.foodtab.service.dto.category.CategoryUpdateDTO;
+import com.focus.foodtab.service.dto.category.CategoryUpdateDisplayOrderDTO;
 import com.focus.foodtab.service.error.ErrorMessage;
 import com.focus.foodtab.service.error.ServerException;
 
@@ -31,7 +33,7 @@ public class CategoryServiceImpl
     @Autowired
     private DozerBeanMapper mapper;
 
-    public CategoryDTO createCategory(CategoryDTO createDTO)
+    public CategoryDTO createCategory(CategoryCreateDTO createDTO)
     {
         validateInputForCreateDTO(createDTO);
         CategoryEntity category = mapper.map(createDTO, CategoryEntity.class);
@@ -51,11 +53,15 @@ public class CategoryServiceImpl
         return mapEntityListToDTOs(categories);
     }
 
-    public CategoryDTO updateCategory(Integer categoryId, CategoryDTO updateDTO)
+    public CategoryDTO updateCategory(Integer categoryId, CategoryUpdateDTO updateDTO)
     {
         validateUpdateDTO(categoryId, updateDTO);
         CategoryEntity category = getCategory(categoryId);
-        category = mapper.map(updateDTO, CategoryEntity.class);
+        category.setName(updateDTO.getName());
+        category.setDescription(updateDTO.getDescription());
+        category.setType(updateDTO.getType());
+        category.setSubType(updateDTO.getSubType());
+        category.setActive(updateDTO.getActive());
         categoryDAO.save(category);
         return mapper.map(category, CategoryDTO.class);
     }
@@ -104,7 +110,7 @@ public class CategoryServiceImpl
         return category;
     }
 
-    private void validateInputForCreateDTO(CategoryDTO createDTO)
+    private void validateInputForCreateDTO(CategoryCreateDTO createDTO)
     {
         validateType(createDTO.getType());
         validateSubType(createDTO.getType(), createDTO.getSubType());
@@ -112,12 +118,15 @@ public class CategoryServiceImpl
         checkIfDisplayRankAlreadyUsed(createDTO.getDisplayRank());
     }
 
-    private void validateUpdateDTO(Integer categoryId, CategoryDTO updateDTO)
+    private void validateUpdateDTO(Integer categoryId, CategoryUpdateDTO updateDTO)
     {
         CategoryEntity categoryEntity = getCategory(categoryId);
+        if (categoryEntity.equals(mapper.map(updateDTO, CategoryEntity.class)))
+        {
+            throw new ServerException(new ErrorMessage(ErrorCodes.NO_FIELDS_UPDATED));
+        }
         validateType(updateDTO.getType());
         validateSubType(updateDTO.getType(), updateDTO.getSubType());
-        checkIfDisplayRankIsUpdated(updateDTO, categoryEntity);
     }
 
     private void validateType(Integer categoryType)
@@ -152,7 +161,7 @@ public class CategoryServiceImpl
         }
     }
 
-    private void checkIfDuplicateEntryExists(CategoryDTO createDTO)
+    private void checkIfDuplicateEntryExists(CategoryCreateDTO createDTO)
     {
         CategoryEntity category = categoryDAO.findByNameAndTypeAndSubType(createDTO.getName(), createDTO.getType(), createDTO.getSubType());
         if (category != null)
@@ -167,14 +176,6 @@ public class CategoryServiceImpl
         if (category != null)
         {
             throw new ServerException(new ErrorMessage(ErrorCodes.INVALID_CATEGORY_DISPLAY_RANK));
-        }
-    }
-
-    private void checkIfDisplayRankIsUpdated(CategoryDTO updateDTO, CategoryEntity categoryEntity)
-    {
-        if (categoryEntity.getDisplayRank() != updateDTO.getDisplayRank())
-        {
-            throw new ServerException(new ErrorMessage(ErrorCodes.DISPLAY_RANK_CANNOT_BE_UPDATED));
         }
     }
 

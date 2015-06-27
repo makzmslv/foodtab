@@ -1,4 +1,4 @@
-package com.focus.foodtab.service.dto;
+package com.focus.foodtab.service.dto.category;
 
 public class CategoryUpdateDisplayOrderDTO
 {
