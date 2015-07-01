@@ -8,7 +8,7 @@
 
     <mapping>
         <class-a>com.focus.foodtab.persistence.entity.MenuItemEntity</class-a>
-        <class-b>com.focus.foodtab.service.dto.MenuItemDTO</class-b>
+        <class-b>com.focus.foodtab.dto.menuitem.MenuItemDTO</class-b>
 
         <field>
             <a>name</a>
