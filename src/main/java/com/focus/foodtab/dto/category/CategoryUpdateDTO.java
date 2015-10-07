@@ -17,9 +17,6 @@ public class CategoryUpdateDTO
 
     private String description;
 
-    @NotNull
-    private boolean active;
-
     public String getName()
     {
         return name;
@@ -60,13 +57,4 @@ public class CategoryUpdateDTO
         this.description = description;
     }
 
-    public boolean getActive()
-    {
-        return active;
-    }
-
-    public void setActive(boolean active)
-    {
-        this.active = active;
-    }
 }

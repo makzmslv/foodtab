@@ -18,15 +18,23 @@ public enum ErrorCodes
     CATEGORY_TYPE_SUB_TYPE_MISMATCH(204, "Category Type and Sub Type do not match"),
     CATEGORY_ALREADY_EXISTS(205, "Category with given type and sub type already exists"),
     INVALID_CATEGORY_DISPLAY_RANK(206, "Category with given display order already exists"),
-    CATEGORY_ACTIVE(207, "Cannot delete Category as it is still ACTIVE"),
-    CATEGORY_IN_USE(208, "Cannot delete Category as it is still being used"),
-    DISPLAY_RANK_CANNOT_BE_UPDATED(209, "Cannot update Category Display Rank from this service."),
+    CATEGORY_IN_USE(207, "Category is still being used"),
+    DISPLAY_RANK_CANNOT_BE_UPDATED(208, "Cannot update Category Display Rank from this service."),
+    CATEGORY_INACTIVE(209, "Category cannot be used as it is inactive"),
 
     // menuItem
     MENU_ITEM_NOT_FOUND(301, "Menu Item does not exist"),
     MENU_ITEM_ALREADY_EXISTS(302, "Menu Item already exists"),
     DUPLICATE_CODE_FOR_MENU_ITEM(303, "Menu Item with code alreay exists"),
-    MENU_ITEM_UNIT_NOT_FOUND(304, "Menu Item Unit does not exist");
+    MENU_ITEM_UNIT_NOT_FOUND(304, "Menu Item Unit does not exist"),
+    MENU_ITEM_INACTIVE(305, "Menu Item cannot be used as it is inactive"),
+    MENU_ITEM_IN_USE(306, "Menu Item is still being used"),
+
+    // menu
+    MENU_ENTRY_NOT_FOUND(401, "Menu Entry not found"),
+    MENU_ENTRY_ALREADY_EXISTS(402, "Menu Entry already exists"),
+
+    TEST(111111, "Test");
 
     private Integer code;
     private String message;

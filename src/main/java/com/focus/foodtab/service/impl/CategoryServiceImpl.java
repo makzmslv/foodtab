@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 
 import com.focus.foodtab.dto.category.CategoryCreateDTO;
 import com.focus.foodtab.dto.category.CategoryDTO;
+import com.focus.foodtab.dto.category.CategoryUpdateActiveStatusDTO;
 import com.focus.foodtab.dto.category.CategoryUpdateDTO;
 import com.focus.foodtab.dto.category.CategoryUpdateDisplayOrderDTO;
+import com.focus.foodtab.library.common.UtilHelper;
 import com.focus.foodtab.library.enums.CategorySubType;
 import com.focus.foodtab.library.enums.CategoryType;
 import com.focus.foodtab.library.enums.ErrorCodes;
@@ -31,6 +33,9 @@ public class CategoryServiceImpl
     private MenuDAO menuDAO;
 
     @Autowired
+    private EntryExistingValidator validator;
+
+    @Autowired
     private DozerBeanMapper mapper;
 
     public CategoryDTO createCategory(CategoryCreateDTO createDTO)
@@ -44,26 +49,35 @@ public class CategoryServiceImpl
     public List<CategoryDTO> findAll()
     {
         List<CategoryEntity> categories = categoryDAO.findAll();
-        return mapEntityListToDTOs(categories);
+        return UtilHelper.mapListOfEnitiesToDTOs(mapper, categories, CategoryDTO.class);
     }
 
     public List<CategoryDTO> findbyActiveStatus(Boolean active)
     {
         List<CategoryEntity> categories = categoryDAO.findByActive(active);
-        return mapEntityListToDTOs(categories);
+        return UtilHelper.mapListOfEnitiesToDTOs(mapper, categories, CategoryDTO.class);
     }
 
-    public CategoryDTO updateCategory(Integer categoryId, CategoryUpdateDTO updateDTO)
+    public CategoryDTO updateCategoryDetails(Integer categoryId, CategoryUpdateDTO updateDTO)
     {
         validateUpdateDTO(categoryId, updateDTO);
-        CategoryEntity category = getCategory(categoryId);
-        category.setName(updateDTO.getName());
-        category.setDescription(updateDTO.getDescription());
-        category.setType(updateDTO.getType());
-        category.setSubType(updateDTO.getSubType());
-        category.setActive(updateDTO.getActive());
+        CategoryEntity category = validator.getCategoryEntityFromId(categoryId);
+        mapper.map(updateDTO, category);
         categoryDAO.save(category);
         return mapper.map(category, CategoryDTO.class);
+    }
+
+    public CategoryDTO updateCategoryActiveStatus(Integer categoryId, CategoryUpdateActiveStatusDTO updateDTO)
+    {
+        CategoryEntity categoryEntity = validator.getCategoryEntityFromId(categoryId);
+        List<MenuEntity> menuEntries = menuDAO.findByCategory(categoryEntity);
+        if (!menuEntries.isEmpty())
+        {
+            throw new ServerException(new ErrorMessage(ErrorCodes.CATEGORY_IN_USE));
+        }
+        categoryEntity.setActive(updateDTO.getActive());
+        categoryDAO.save(categoryEntity);
+        return mapper.map(categoryEntity, CategoryDTO.class);
     }
 
     public List<CategoryDTO> updateDisplayOrder(List<CategoryUpdateDisplayOrderDTO> updateDTOs)
@@ -71,8 +85,8 @@ public class CategoryServiceImpl
         List<CategoryDTO> updatedCategories = new ArrayList<CategoryDTO>();
         for (CategoryUpdateDisplayOrderDTO updateDTO : updateDTOs)
         {
-            CategoryEntity category1 = getCategory(updateDTO.getCategoryId1());
-            CategoryEntity category2 = getCategory(updateDTO.getCategoryId2());
+            CategoryEntity category1 = validator.getCategoryEntityFromId(updateDTO.getCategoryId1());
+            CategoryEntity category2 = validator.getCategoryEntityFromId(updateDTO.getCategoryId2());
             Integer displayOrderCategory1 = category1.getDisplayRank();
             Integer displayOrderCategory2 = category2.getDisplayRank();
             category1.setDisplayRank(displayOrderCategory2);
@@ -87,10 +101,10 @@ public class CategoryServiceImpl
 
     public void deleteCategory(Integer categoryId)
     {
-        CategoryEntity category = getCategory(categoryId);
+        CategoryEntity category = validator.getCategoryEntityFromId(categoryId);
         if (category.getActive())
         {
-            throw new ServerException(new ErrorMessage(ErrorCodes.CATEGORY_ACTIVE));
+            throw new ServerException(new ErrorMessage(ErrorCodes.CATEGORY_IN_USE));
         }
         List<MenuEntity> menu = menuDAO.findByCategory(category);
         if (!menu.isEmpty())
@@ -98,16 +112,6 @@ public class CategoryServiceImpl
             throw new ServerException(new ErrorMessage(ErrorCodes.CATEGORY_IN_USE));
         }
         categoryDAO.delete(category);
-    }
-
-    private CategoryEntity getCategory(Integer categoryId)
-    {
-        CategoryEntity category = categoryDAO.findOne(categoryId);
-        if (category == null)
-        {
-            throw new ServerException(new ErrorMessage(ErrorCodes.CATEGORY_NOT_FOUND));
-        }
-        return category;
     }
 
     private void validateInputForCreateDTO(CategoryCreateDTO createDTO)
@@ -120,7 +124,7 @@ public class CategoryServiceImpl
 
     private void validateUpdateDTO(Integer categoryId, CategoryUpdateDTO updateDTO)
     {
-        CategoryEntity categoryEntity = getCategory(categoryId);
+        CategoryEntity categoryEntity = validator.getCategoryEntityFromId(categoryId);
         if (categoryEntity.equals(mapper.map(updateDTO, CategoryEntity.class)))
         {
             throw new ServerException(new ErrorMessage(ErrorCodes.NO_FIELDS_UPDATED));
@@ -177,16 +181,5 @@ public class CategoryServiceImpl
         {
             throw new ServerException(new ErrorMessage(ErrorCodes.INVALID_CATEGORY_DISPLAY_RANK));
         }
-    }
-
-    private List<CategoryDTO> mapEntityListToDTOs(List<CategoryEntity> categories)
-    {
-        List<CategoryDTO> categoryDTOs = new ArrayList<CategoryDTO>();
-        for (CategoryEntity category : categories)
-        {
-            CategoryDTO dto = mapper.map(category, CategoryDTO.class);
-            categoryDTOs.add(dto);
-        }
-        return categoryDTOs;
     }
 }

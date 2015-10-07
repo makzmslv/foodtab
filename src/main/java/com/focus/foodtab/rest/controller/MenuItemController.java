@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.focus.foodtab.dto.menuitem.MenuItemCreateDTO;
 import com.focus.foodtab.dto.menuitem.MenuItemDTO;
 import com.focus.foodtab.dto.menuitem.MenuItemUnitDTO;
+import com.focus.foodtab.dto.menuitem.MenuItemUpdateActiveStatusDTO;
+import com.focus.foodtab.dto.menuitem.MenuItemUpdateDTO;
 import com.focus.foodtab.service.impl.MenuItemServiceImpl;
 import com.focus.foodtab.service.impl.MenuItemUnitServiceImpl;
 import com.wordnik.swagger.annotations.Api;
@@ -40,14 +42,21 @@ public class MenuItemController
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseBody
-    public MenuItemDTO updateMenuItem(@PathVariable Integer id, @Valid @RequestBody MenuItemCreateDTO updateDTO)
+    public MenuItemDTO updateMenuItemDetails(@PathVariable Integer id, @Valid @RequestBody MenuItemUpdateDTO updateDTO)
     {
-        return menuItemService.updateMenuItem(id, updateDTO);
+        return menuItemService.updateMenuItemDetails(id, updateDTO);
+    }
+
+    @RequestMapping(value = "/{id}/active", method = RequestMethod.PUT)
+    @ResponseBody
+    public MenuItemDTO updateCategoryActiveStatus(@PathVariable Integer id, @Valid @RequestBody MenuItemUpdateActiveStatusDTO updateDTO)
+    {
+        return menuItemService.updateMenuItemActiveStatus(id, updateDTO);
     }
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public List<MenuItemDTO> getTables(@RequestParam(required = false) Boolean active)
+    public List<MenuItemDTO> getMenuItems(@RequestParam(required = false) Boolean active)
     {
         if (active == null)
         {

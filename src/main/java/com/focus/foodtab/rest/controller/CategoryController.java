@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.focus.foodtab.dto.category.CategoryCreateDTO;
 import com.focus.foodtab.dto.category.CategoryDTO;
+import com.focus.foodtab.dto.category.CategoryUpdateActiveStatusDTO;
 import com.focus.foodtab.dto.category.CategoryUpdateDTO;
 import com.focus.foodtab.dto.category.CategoryUpdateDisplayOrderDTO;
 import com.focus.foodtab.service.impl.CategoryServiceImpl;
@@ -48,9 +49,16 @@ public class CategoryController
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseBody
-    public CategoryDTO updateCategory(@PathVariable Integer id, @Valid @RequestBody CategoryUpdateDTO updateDTO)
+    public CategoryDTO updateCategoryDetails(@PathVariable Integer id, @Valid @RequestBody CategoryUpdateDTO updateDTO)
     {
-        return categoryService.updateCategory(id, updateDTO);
+        return categoryService.updateCategoryDetails(id, updateDTO);
+    }
+
+    @RequestMapping(value = "/{id}/active", method = RequestMethod.PUT)
+    @ResponseBody
+    public CategoryDTO updateCategoryActiveStatus(@PathVariable Integer id, @Valid @RequestBody CategoryUpdateActiveStatusDTO updateDTO)
+    {
+        return categoryService.updateCategoryActiveStatus(id, updateDTO);
     }
 
     @RequestMapping(method = RequestMethod.PUT)

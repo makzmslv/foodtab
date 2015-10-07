@@ -13,4 +13,6 @@ public interface MenuDAO extends JpaRepository<MenuEntity, Integer>
     public List<MenuEntity> findByMenuItem(MenuItemEntity menuItem);
 
     public List<MenuEntity> findByCategory(CategoryEntity category);
+
+    public MenuEntity findByMenuItemAndCategory(MenuItemEntity menuItem, CategoryEntity category);
 }
