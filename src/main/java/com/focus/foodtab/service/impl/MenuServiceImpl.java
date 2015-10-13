@@ -41,13 +41,17 @@ public class MenuServiceImpl
     @Autowired
     private DozerBeanMapper mapper;
 
-    public List<MenuDTO> createMenuEntries(MenuCreateDTO createDTO)
+    public List<MenuDTO> createMenuEntries(List<MenuCreateDTO> createDTOs)
     {
-        CategoryEntity categoryEntity = validator.getCategoryEntityFromId(createDTO.getCategoryId());
-        List<MenuDTO> menuEntries = new ArrayList<MenuDTO>();
-        for (Integer menuItemId : createDTO.getMenuItemIds())
+        if (createDTOs.isEmpty())
         {
-            MenuItemEntity menuItemEntity = validator.getMenuItemEntityFromId(menuItemId);
+            throw new ServerException(new ErrorMessage(ErrorCodes.NO_FIELDS_UPDATED));
+        }
+        List<MenuDTO> menuEntries = new ArrayList<MenuDTO>();
+        for (MenuCreateDTO menuItem : createDTOs)
+        {
+            CategoryEntity categoryEntity = validator.getCategoryEntityFromId(menuItem.getCategoryId());
+            MenuItemEntity menuItemEntity = validator.getMenuItemEntityFromId(menuItem.getMenuItemId());
             checkIfInActive(categoryEntity, menuItemEntity);
             checkIfMenuEntryAlreadyExists(categoryEntity, menuItemEntity);
             MenuEntity menuEntity = createMenuEntryEntity(categoryEntity, menuItemEntity);

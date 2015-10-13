@@ -7,12 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.focus.foodtab.dto.order.OrderDTO;
 import com.focus.foodtab.dto.table.TableCreateDTO;
 import com.focus.foodtab.dto.table.TableDTO;
 import com.focus.foodtab.dto.table.TableUpdateDTO;
 import com.focus.foodtab.library.common.UtilHelper;
 import com.focus.foodtab.library.enums.ErrorCodes;
+import com.focus.foodtab.persistence.dao.OrderDAO;
 import com.focus.foodtab.persistence.dao.TableDAO;
+import com.focus.foodtab.persistence.entity.OrderEntity;
 import com.focus.foodtab.persistence.entity.TableEntity;
 import com.focus.foodtab.service.error.ErrorMessage;
 import com.focus.foodtab.service.error.ServerException;
@@ -23,6 +26,9 @@ public class TableServiceImpl
 {
     @Autowired
     private TableDAO tableDAO;
+
+    @Autowired
+    private OrderDAO orderDAO;
 
     @Autowired
     private EntryExistingValidator validator;
@@ -57,6 +63,13 @@ public class TableServiceImpl
     {
         List<TableEntity> tables = tableDAO.findByActive(active);
         return UtilHelper.mapListOfEnitiesToDTOs(mapper, tables, TableDTO.class);
+    }
+
+    public List<OrderDTO> getAllOrdersForTable(Integer tableNo)
+    {
+        TableEntity tableEntity = validator.getTableEntityFromTableNo(tableNo);
+        List<OrderEntity> orderEntities = orderDAO.findByTableOrderByIdDesc(tableEntity);
+        return UtilHelper.mapListOfEnitiesToDTOs(mapper, orderEntities, OrderDTO.class);
     }
 
     private void validateCreateTableInput(TableCreateDTO createDTO)

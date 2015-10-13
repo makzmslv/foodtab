@@ -12,7 +12,7 @@
         <spring-framework.version>4.1.3.RELEASE</spring-framework.version>
         <spring-security.version>3.2.5.RELEASE</spring-security.version>
         <hibernate.version>4.3.8.Final</hibernate.version>
-        <jackson.version>2.2.2</jackson.version>
+        <jackson.version>2.4.6</jackson.version>
         <liquibase.version>3.0.8</liquibase.version>
         <dozer.version>5.5.1</dozer.version>
         <org.aspectj-version>1.6.10</org.aspectj-version>
@@ -123,11 +123,6 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
-        <dependency>
-            <artifactId>jackson-module-scala_2.10</artifactId>
-            <groupId>com.fasterxml.jackson.module</groupId>
             <version>${jackson.version}</version>
         </dependency>
 

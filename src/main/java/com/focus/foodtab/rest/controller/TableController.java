@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.focus.foodtab.dto.order.OrderDTO;
 import com.focus.foodtab.dto.table.TableCreateDTO;
 import com.focus.foodtab.dto.table.TableDTO;
 import com.focus.foodtab.dto.table.TableUpdateDTO;
@@ -50,5 +51,12 @@ public class TableController
             return tableService.findAll();
         }
         return tableService.findbyActiveStatus(active);
+    }
+
+    @RequestMapping(value = "/{tableNo}/orders", method = RequestMethod.GET)
+    @ResponseBody
+    public List<OrderDTO> getAllOrdersForTable(@PathVariable Integer tableNo)
+    {
+        return tableService.getAllOrdersForTable(tableNo);
     }
 }

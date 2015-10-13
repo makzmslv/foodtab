@@ -28,7 +28,7 @@ public class MenuController
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public List<MenuDTO> createMenuEntry(@Valid @RequestBody MenuCreateDTO createDTO)
+    public List<MenuDTO> createMenuEntry(@Valid @RequestBody List<MenuCreateDTO> createDTO)
     {
         return menuService.createMenuEntries(createDTO);
     }
