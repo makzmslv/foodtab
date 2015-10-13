@@ -5,6 +5,7 @@ import java.util.List;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.focus.foodtab.dto.table.TableCreateDTO;
 import com.focus.foodtab.dto.table.TableDTO;
@@ -17,6 +18,7 @@ import com.focus.foodtab.service.error.ErrorMessage;
 import com.focus.foodtab.service.error.ServerException;
 
 @Service
+@Transactional
 public class TableServiceImpl
 {
     @Autowired

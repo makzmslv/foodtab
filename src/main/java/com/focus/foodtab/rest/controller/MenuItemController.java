@@ -56,13 +56,17 @@ public class MenuItemController
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public List<MenuItemDTO> getMenuItems(@RequestParam(required = false) Boolean active)
+    public List<MenuItemDTO> getMenuItems(@RequestParam(required = false) Boolean uncategorized, @RequestParam(required = false) Boolean active)
     {
-        if (active == null)
+        if (active != null)
         {
-            return menuItemService.findAll();
+            return menuItemService.findbyActiveStatus(active);
         }
-        return menuItemService.findbyActiveStatus(active);
+        if (uncategorized != null)
+        {
+            menuItemService.findAllUncategorizedItems(uncategorized);
+        }
+        return menuItemService.findAll();
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

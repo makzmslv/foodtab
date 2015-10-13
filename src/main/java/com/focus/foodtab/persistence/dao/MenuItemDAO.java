@@ -13,4 +13,6 @@ public interface MenuItemDAO extends JpaRepository<MenuItemEntity, Integer>
     public MenuItemEntity findByCode(Integer code);
 
     public List<MenuItemEntity> findByActive(Boolean active);
+
+    public List<MenuItemEntity> findByActiveAndIdNotIn(Boolean active, List<Integer> menuItemIds);
 }

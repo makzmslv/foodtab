@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+    <!--                                  -->
+    <!-- OrderEntity - OrderDTO -->
+    <!--                                  -->
+
+    <mapping>
+        <class-a>com.focus.foodtab.persistence.entity.OrderEntity</class-a>
+        <class-b>com.focus.foodtab.dto.order.OrderDTO</class-b>
+
+        <field>
+            <a>id</a>
+            <b>id</b>
+        </field>
+        <field>
+            <a>status</a>
+            <b>status</b>
+        </field>
+        <field>
+            <a>table.tableNo</a>
+            <b>tableNo</b>
+        </field>
+    </mapping>
+
+    <!--                                  -->
+    <!-- OrderDetailsEntity - OrderDetailsDTO -->
+    <!--                                  -->
+
+    <mapping>
+        <class-a>com.focus.foodtab.persistence.entity.OrderDetailsEntity</class-a>
+        <class-b>com.focus.foodtab.dto.order.OrderDetailsDTO</class-b>
+
+        <field>
+            <a>id</a>
+            <b>id</b>
+        </field>
+        <field>
+            <a>order.id</a>
+            <b>orderId</b>
+        </field>
+        <field>
+            <a>menuItem</a>
+            <b>menuItem</b>
+        </field>
+        <field>
+            <a>quantity</a>
+            <b>quantity</b>
+        </field>
+        <field>
+            <a>costOfItem</a>
+            <b>cost</b>
+        </field>
+        <field>
+            <a>status</a>
+            <b>status</b>
+        </field>
+        <field>
+            <a>timestamp</a>
+            <b>timestamp</b>
+        </field>
+    </mapping>
+
+</mappings>

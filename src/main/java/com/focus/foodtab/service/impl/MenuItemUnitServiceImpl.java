@@ -3,6 +3,7 @@ package com.focus.foodtab.service.impl;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.focus.foodtab.dto.menuitem.MenuItemUnitDTO;
 import com.focus.foodtab.library.enums.ErrorCodes;
@@ -14,6 +15,7 @@ import com.focus.foodtab.service.error.ErrorMessage;
 import com.focus.foodtab.service.error.ServerException;
 
 @Service
+@Transactional
 public class MenuItemUnitServiceImpl
 {
     @Autowired

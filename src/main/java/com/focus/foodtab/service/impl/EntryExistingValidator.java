@@ -7,10 +7,14 @@ import com.focus.foodtab.library.enums.ErrorCodes;
 import com.focus.foodtab.persistence.dao.CategoryDAO;
 import com.focus.foodtab.persistence.dao.MenuDAO;
 import com.focus.foodtab.persistence.dao.MenuItemDAO;
+import com.focus.foodtab.persistence.dao.OrderDAO;
+import com.focus.foodtab.persistence.dao.OrderDetailsDAO;
 import com.focus.foodtab.persistence.dao.TableDAO;
 import com.focus.foodtab.persistence.entity.CategoryEntity;
 import com.focus.foodtab.persistence.entity.MenuEntity;
 import com.focus.foodtab.persistence.entity.MenuItemEntity;
+import com.focus.foodtab.persistence.entity.OrderDetailsEntity;
+import com.focus.foodtab.persistence.entity.OrderEntity;
 import com.focus.foodtab.persistence.entity.TableEntity;
 import com.focus.foodtab.service.error.ErrorMessage;
 import com.focus.foodtab.service.error.ServerException;
@@ -29,6 +33,12 @@ public class EntryExistingValidator
 
     @Autowired
     private MenuItemDAO menuItemDAO;
+
+    @Autowired
+    private OrderDAO orderDAO;
+
+    @Autowired
+    private OrderDetailsDAO orderDetailsDAO;
 
     public CategoryEntity getCategoryEntityFromId(Integer categoryId)
     {
@@ -68,5 +78,25 @@ public class EntryExistingValidator
             throw new ServerException(new ErrorMessage(ErrorCodes.TABLE_NOT_FOUND));
         }
         return tableEntity;
+    }
+
+    public OrderEntity getOrderEntityFromId(Integer orderId)
+    {
+        OrderEntity orderEntity = orderDAO.findOne(orderId);
+        if (orderEntity == null)
+        {
+            throw new ServerException(new ErrorMessage(ErrorCodes.ORDER_DOES_NOT_EXIST));
+        }
+        return orderEntity;
+    }
+
+    public OrderDetailsEntity getOrderDetailsEntityId(Integer orderDetailsId)
+    {
+        OrderDetailsEntity orderDetailsEntity = orderDetailsDAO.findOne(orderDetailsId);
+        if (orderDetailsEntity == null)
+        {
+            throw new ServerException(new ErrorMessage(ErrorCodes.ORDER_DOES_NOT_EXIST));
+        }
+        return orderDetailsEntity;
     }
 }

@@ -33,11 +33,9 @@ public class MenuItemCreateDTO
     @Min(1)
     private Integer serves;
 
-    @NotNull
     @Valid
     private MenuItemDetailsDTO menuItemDetails;
 
-    @NotNull
     @Valid
     private List<MenuItemUnitDTO> menuItemUnits;
 

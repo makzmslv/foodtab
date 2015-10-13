@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.focus.foodtab.dto.menu.MenuCreateDTO;
 import com.focus.foodtab.dto.menu.MenuDTO;
+import com.focus.foodtab.dto.menu.MenuUpdateDTO;
 import com.focus.foodtab.service.impl.MenuServiceImpl;
 import com.wordnik.swagger.annotations.Api;
 
@@ -27,14 +28,14 @@ public class MenuController
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public MenuDTO createMenuEntry(@Valid @RequestBody MenuCreateDTO createDTO)
+    public List<MenuDTO> createMenuEntry(@Valid @RequestBody MenuCreateDTO createDTO)
     {
-        return menuService.createMenuEntry(createDTO);
+        return menuService.createMenuEntries(createDTO);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseBody
-    public MenuDTO updateMenuEntry(@PathVariable Integer id, @Valid @RequestBody MenuCreateDTO updateDTO)
+    public MenuDTO updateMenuEntry(@PathVariable Integer id, @Valid @RequestBody MenuUpdateDTO updateDTO)
     {
         return menuService.updateMenuEntry(id, updateDTO);
     }

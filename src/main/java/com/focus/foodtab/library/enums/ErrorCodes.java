@@ -34,6 +34,15 @@ public enum ErrorCodes
     MENU_ENTRY_NOT_FOUND(401, "Menu Entry not found"),
     MENU_ENTRY_ALREADY_EXISTS(402, "Menu Entry already exists"),
 
+    // order
+    ORDER_DOES_NOT_EXIST(501, "Order does not exist"),
+    ORDER_ALREADY_IN_PROGRESS_FOR_TABLE(502, "Order already in progress for Table"),
+    ORDER_COMPLETED(503, "Cannot update order as already completed"),
+    ORDER_DETAIL_DOES_NOT_EXIST(504, "Order Details does not exist"),
+    ORDER_ITEM_CANNOT_UPDATED_AS_ALREADY_DELIVERED(505, "Order item cannot be updated as it is already delivered"),
+    ORDER_ITEM_CANNOT_UPDATED_AS_ALREADY_CANCELLED(506, "Order item cannot be updated as it is already cancelled"),
+    ORDER_ITEM_CANNOT_UPDATED_DUE_TO_TIME_ELAPSED(507, "Order item cannot be updated after 5 minutes"),
+
     TEST(111111, "Test");
 
     private Integer code;

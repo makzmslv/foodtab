@@ -1,28 +1,23 @@
 package com.focus.foodtab.dto.menu;
 
-import java.util.List;
-
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
-public class MenuCreateDTO
+public class MenuUpdateDTO
 {
     @NotNull
-    @NotEmpty
-    private List<Integer> menuItemIds;
+    private Integer menuItemId;
 
     @NotNull
     private Integer categoryId;
 
-    public List<Integer> getMenuItemIds()
+    public Integer getMenuItemId()
     {
-        return menuItemIds;
+        return menuItemId;
     }
 
-    public void setMenuItemIds(List<Integer> menuItemIds)
+    public void setMenuItemId(Integer menuItemId)
     {
-        this.menuItemIds = menuItemIds;
+        this.menuItemId = menuItemId;
     }
 
     public Integer getCategoryId()

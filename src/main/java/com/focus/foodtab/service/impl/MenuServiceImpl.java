@@ -1,13 +1,16 @@
 package com.focus.foodtab.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.focus.foodtab.dto.menu.MenuCreateDTO;
 import com.focus.foodtab.dto.menu.MenuDTO;
+import com.focus.foodtab.dto.menu.MenuUpdateDTO;
 import com.focus.foodtab.library.common.UtilHelper;
 import com.focus.foodtab.library.enums.ErrorCodes;
 import com.focus.foodtab.persistence.dao.CategoryDAO;
@@ -20,6 +23,7 @@ import com.focus.foodtab.service.error.ErrorMessage;
 import com.focus.foodtab.service.error.ServerException;
 
 @Service
+@Transactional
 public class MenuServiceImpl
 {
     @Autowired
@@ -37,18 +41,23 @@ public class MenuServiceImpl
     @Autowired
     private DozerBeanMapper mapper;
 
-    public MenuDTO createMenuEntry(MenuCreateDTO createDTO)
+    public List<MenuDTO> createMenuEntries(MenuCreateDTO createDTO)
     {
         CategoryEntity categoryEntity = validator.getCategoryEntityFromId(createDTO.getCategoryId());
-        MenuItemEntity menuItemEntity = validator.getMenuItemEntityFromId(createDTO.getMenuItemId());
-        checkIfInActive(categoryEntity, menuItemEntity);
-        checkIfMenuEntryAlreadyExists(categoryEntity, menuItemEntity);
-        MenuEntity menuEntity = createMenuEntryEntity(categoryEntity, menuItemEntity);
-        menuEntity = menuDAO.save(menuEntity);
-        return mapper.map(menuEntity, MenuDTO.class);
+        List<MenuDTO> menuEntries = new ArrayList<MenuDTO>();
+        for (Integer menuItemId : createDTO.getMenuItemIds())
+        {
+            MenuItemEntity menuItemEntity = validator.getMenuItemEntityFromId(menuItemId);
+            checkIfInActive(categoryEntity, menuItemEntity);
+            checkIfMenuEntryAlreadyExists(categoryEntity, menuItemEntity);
+            MenuEntity menuEntity = createMenuEntryEntity(categoryEntity, menuItemEntity);
+            menuEntity = menuDAO.save(menuEntity);
+            menuEntries.add(mapper.map(menuEntity, MenuDTO.class));
+        }
+        return menuEntries;
     }
 
-    public MenuDTO updateMenuEntry(Integer menuEntryId, MenuCreateDTO updateDTO)
+    public MenuDTO updateMenuEntry(Integer menuEntryId, MenuUpdateDTO updateDTO)
     {
         MenuEntity menuEntity = validator.getMenuEntityFromId(menuEntryId);
         checkIfFieldsAreUpdated(menuEntity, updateDTO);
@@ -95,7 +104,7 @@ public class MenuServiceImpl
         }
     }
 
-    private void checkIfFieldsAreUpdated(MenuEntity menuEntity, MenuCreateDTO updateDTO)
+    private void checkIfFieldsAreUpdated(MenuEntity menuEntity, MenuUpdateDTO updateDTO)
     {
         if (menuEntity.getCategory().getId() == updateDTO.getCategoryId() && menuEntity.getMenuItem().getId() == updateDTO.getMenuItemId())
         {

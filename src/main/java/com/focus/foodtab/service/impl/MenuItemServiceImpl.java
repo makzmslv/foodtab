@@ -72,6 +72,13 @@ public class MenuItemServiceImpl
         return UtilHelper.mapListOfEnitiesToDTOs(mapper, menuItems, MenuItemDTO.class);
     }
 
+    public List<MenuItemDTO> findAllUncategorizedItems(Boolean active)
+    {
+        List<Integer> menuItemIds = menuDAO.getMenuItemIds();
+        List<MenuItemEntity> menuItems = menuItemDAO.findByActiveAndIdNotIn(active, menuItemIds);
+        return UtilHelper.mapListOfEnitiesToDTOs(mapper, menuItems, MenuItemDTO.class);
+    }
+
     public List<MenuItemDTO> findbyActiveStatus(Boolean active)
     {
         List<MenuItemEntity> menuItems = menuItemDAO.findByActive(active);
@@ -127,10 +134,17 @@ public class MenuItemServiceImpl
 
     private void setReferences(MenuItemEntity menuItem)
     {
-        menuItem.getMenuItemDetails().setMenuItem(menuItem);
-        for (MenuItemUnitEntity menuItemUnit : menuItem.getMenuItemUnits())
+        if (menuItem.getMenuItemDetails() != null)
         {
-            menuItemUnit.setMenuItem(menuItem);
+            menuItem.getMenuItemDetails().setMenuItem(menuItem);
+        }
+
+        if (menuItem.getMenuItemUnits() != null)
+        {
+            for (MenuItemUnitEntity menuItemUnit : menuItem.getMenuItemUnits())
+            {
+                menuItemUnit.setMenuItem(menuItem);
+            }
         }
     }
 }
