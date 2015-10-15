@@ -9,16 +9,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.focus.foodtab.dto.order.OrderCreateDTO;
 import com.focus.foodtab.dto.order.OrderDTO;
 import com.focus.foodtab.dto.order.OrderDetailsCreateDTO;
 import com.focus.foodtab.dto.order.OrderDetailsDTO;
 import com.focus.foodtab.dto.order.OrderDetailsUpdateDTO;
+import com.focus.foodtab.dto.order.OrderUpdateDTO;
 import com.focus.foodtab.library.common.UtilHelper;
 import com.focus.foodtab.library.enums.ErrorCodes;
 import com.focus.foodtab.library.enums.OrderItemStatus;
 import com.focus.foodtab.library.enums.OrderStatus;
+import com.focus.foodtab.persistence.dao.BillDAO;
 import com.focus.foodtab.persistence.dao.OrderDAO;
 import com.focus.foodtab.persistence.dao.OrderDetailsDAO;
+import com.focus.foodtab.persistence.entity.BillEntity;
 import com.focus.foodtab.persistence.entity.MenuItemEntity;
 import com.focus.foodtab.persistence.entity.OrderDetailsEntity;
 import com.focus.foodtab.persistence.entity.OrderEntity;
@@ -37,14 +41,17 @@ public class OrderServiceImpl
     private OrderDetailsDAO orderDetailsDAO;
 
     @Autowired
+    private BillDAO billDAO;
+
+    @Autowired
     private EntryExistingValidator validator;
 
     @Autowired
     private DozerBeanMapper mapper;
 
-    public OrderDTO createOrder(Integer tableNo)
+    public OrderDTO createOrder(OrderCreateDTO createDTO)
     {
-        TableEntity tableEntity = validator.getTableEntityFromTableNo(tableNo);
+        TableEntity tableEntity = validator.getTableEntityFromTableNo(createDTO.getTableNo());
         checkIfOrderAlreadyInProgressForTable(tableEntity);
         OrderEntity orderEntity = new OrderEntity();
         orderEntity.setStatus(OrderStatus.CREATED.getCode());
@@ -56,6 +63,32 @@ public class OrderServiceImpl
     public OrderDTO getOrder(Integer orderId)
     {
         OrderEntity orderEntity = validator.getOrderEntityFromId(orderId);
+        return mapper.map(orderEntity, OrderDTO.class);
+    }
+
+    public OrderDTO updateOrderStatus(Integer orderId, OrderUpdateDTO updateDTO)
+    {
+        OrderEntity orderEntity = validator.getOrderEntityFromId(orderId);
+        if (OrderStatus.getOrderInProgresStatuses().contains(updateDTO.getStatus()))
+        {
+            throw new ServerException(new ErrorMessage(ErrorCodes.INVALID_ORDER_STATUS));
+        }
+        if (OrderStatus.ORDER_COMPLETED.equals(updateDTO.getStatus()))
+        {
+            List<OrderDetailsEntity> orderItems = orderDetailsDAO.findByOrderAndStatusNotIn(orderEntity, OrderStatus.getOrderInProgresStatuses());
+            if (!orderItems.isEmpty())
+            {
+                throw new ServerException(new ErrorMessage(ErrorCodes.ORDER_IN_PROGRESS));
+            }
+        }
+        if (OrderStatus.getBillGeneratedForOrderStatuses().contains(updateDTO.getStatus()))
+        {
+            BillEntity bill = billDAO.findByOrder(orderEntity);
+            if (bill == null)
+            {
+                throw new ServerException(new ErrorMessage(ErrorCodes.INVALID_ORDER_STATUS));
+            }
+        }
         return mapper.map(orderEntity, OrderDTO.class);
     }
 
@@ -118,7 +151,7 @@ public class OrderServiceImpl
         OrderEntity orderEntity = orderDAO.findByTableAndStatusNot(tableEntity, OrderStatus.BILL_PAID.getCode());
         if (orderEntity != null)
         {
-            throw new ServerException(new ErrorMessage(ErrorCodes.ORDER_ALREADY_IN_PROGRESS_FOR_TABLE));
+            throw new ServerException(new ErrorMessage(ErrorCodes.ORDER_IN_PROGRESS));
         }
     }
 

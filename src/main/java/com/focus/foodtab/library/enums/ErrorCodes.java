@@ -2,6 +2,7 @@ package com.focus.foodtab.library.enums;
 
 public enum ErrorCodes
 {
+    // @formatter:off
     // common
     VALIDATION_ERROR(001, "Invalid Method Argument"),
     NO_FIELDS_UPDATED(002, "No fields were updated"),
@@ -36,15 +37,20 @@ public enum ErrorCodes
 
     // order
     ORDER_DOES_NOT_EXIST(501, "Order does not exist"),
-    ORDER_ALREADY_IN_PROGRESS_FOR_TABLE(502, "Order already in progress for Table"),
+    ORDER_IN_PROGRESS(502, "Order already in progress for Table"),
     ORDER_COMPLETED(503, "Cannot update order as already completed"),
     ORDER_DETAIL_DOES_NOT_EXIST(504, "Order Details does not exist"),
     ORDER_ITEM_CANNOT_UPDATED_AS_ALREADY_DELIVERED(505, "Order item cannot be updated as it is already delivered"),
     ORDER_ITEM_CANNOT_UPDATED_AS_ALREADY_CANCELLED(506, "Order item cannot be updated as it is already cancelled"),
     ORDER_ITEM_CANNOT_UPDATED_DUE_TO_TIME_ELAPSED(507, "Order item cannot be updated after 5 minutes"),
+    INVALID_ORDER_STATUS(508, "Invalid Order status for Bill generation"),
+
+    // bill
+   BILL_ALREADY_EXISTS(601, "Bill already exists for order"),
 
     TEST(111111, "Test");
 
+    // @formatter:on
     private Integer code;
     private String message;
 

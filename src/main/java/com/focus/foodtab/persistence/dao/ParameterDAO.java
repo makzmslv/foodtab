@@ -6,5 +6,5 @@ import com.focus.foodtab.persistence.entity.ParameterEntity;
 
 public interface ParameterDAO extends JpaRepository<ParameterEntity, Integer>
 {
-
+    public ParameterEntity findByKey(String key);
 }

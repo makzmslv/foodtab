@@ -69,4 +69,14 @@ public class OrderEntity implements Serializable
         this.table = table;
     }
 
+    public List<OrderDetailsEntity> getOrderDetails()
+    {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(List<OrderDetailsEntity> orderDetails)
+    {
+        this.orderDetails = orderDetails;
+    }
+
 }

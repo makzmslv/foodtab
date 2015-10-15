@@ -18,4 +18,14 @@
             </column>
         </createTable>
     </changeSet>
+    <changeSet author="mk" id="2">
+        <insert tableName="PARAMETERS">
+            <column name="KEY" value="TAX"/>
+            <column name="VALUE" value="10"/>
+        </insert>
+        <insert tableName="PARAMETERS">
+            <column name="KEY" value="DISCOUNT"/>
+            <column name="VALUE" value="10"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>

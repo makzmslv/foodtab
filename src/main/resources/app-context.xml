@@ -53,6 +53,7 @@
                 <value>dozer-mappings/menuItem.xml</value>
                 <value>dozer-mappings/menu.xml</value>
                 <value>dozer-mappings/order.xml</value>
+                <value>dozer-mappings/bill.xml</value>
             </list>
         </property>
     </bean>
