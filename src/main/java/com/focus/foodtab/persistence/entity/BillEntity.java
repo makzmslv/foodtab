@@ -29,11 +29,11 @@ public class BillEntity implements Serializable
 
     @ManyToOne
     @JoinColumn(name = "REF_TABLE")
-    private TableEntity table;
+    private TableEntity tableEntity;
 
     @OneToOne
     @JoinColumn(name = "REF_ORDER")
-    private OrderEntity order;
+    private OrderEntity orderEntity;
 
     @Column(name = "BILL_AMOUNT")
     private BigDecimal billAmount;
@@ -63,22 +63,22 @@ public class BillEntity implements Serializable
 
     public TableEntity getTable()
     {
-        return table;
+        return tableEntity;
     }
 
     public void setTable(TableEntity table)
     {
-        this.table = table;
+        this.tableEntity = table;
     }
 
     public OrderEntity getOrder()
     {
-        return order;
+        return orderEntity;
     }
 
     public void setOrder(OrderEntity order)
     {
-        this.order = order;
+        this.orderEntity = order;
     }
 
     public BigDecimal getBillAmount()

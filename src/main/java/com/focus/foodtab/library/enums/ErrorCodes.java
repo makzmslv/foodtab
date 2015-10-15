@@ -8,9 +8,10 @@ public enum ErrorCodes
     NO_FIELDS_UPDATED(002, "No fields were updated"),
 
     // table
-    TABLE_NOT_FOUND(100, "Table does not exist"),
-    INVALID_TABLE_NO(101, "Table No cannot be negative"),
-    TABLE_ALREADY_EXISTS(102, "Table with Table No already exists"),
+    TABLE_NOT_FOUND(101, "Table does not exist"),
+    INVALID_TABLE_NO(102, "Table No cannot be negative"),
+    TABLE_ALREADY_EXISTS(103, "Table with Table No already exists"),
+    TABLE_INACTIVE(104, "Table with Table No already exists"),
 
     // category
     CATEGORY_NOT_FOUND(201, "Category does not exist"),

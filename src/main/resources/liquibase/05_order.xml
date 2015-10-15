@@ -4,9 +4,9 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
-    <!-- ORDER -->
+    <!-- ORDERS-->
     <changeSet author="mk3" id="1">
-        <createTable tableName="ORDER" remarks="ORDER">
+        <createTable tableName="ORDERS" remarks="ORDERS">
             <column name="ID" type="INTEGER" autoIncrement="true">
                 <constraints primaryKey="true" primaryKeyName="ORDER_PK" nullable="false"/>
             </column>
@@ -17,7 +17,7 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-        <addForeignKeyConstraint constraintName="FK_ORDER_REF_TABLE" baseTableName="ORDER" baseColumnNames="REF_TABLE" referencedTableName="TABLES" referencedColumnNames="ID"/>
+        <addForeignKeyConstraint constraintName="FK_ORDERS_REF_TABLE" baseTableName="ORDERS" baseColumnNames="REF_TABLE" referencedTableName="TABLES" referencedColumnNames="ID"/>
     </changeSet>
 
     <!-- ORDER_DETAILS -->
@@ -46,7 +46,7 @@
             </column>
         </createTable>
         <addForeignKeyConstraint constraintName="FK_ORDER_DETAILS_REF_MENU_ITEM" baseTableName="ORDER_DETAILS" baseColumnNames="REF_MENU_ITEM" referencedTableName="MENU_ITEM" referencedColumnNames="ID"/>
-        <addForeignKeyConstraint constraintName="FK_ORDER_DETAILS_REF_ORDER" baseTableName="ORDER_DETAILS" baseColumnNames="REF_ORDER" referencedTableName="ORDER" referencedColumnNames="ID"/>
+        <addForeignKeyConstraint constraintName="FK_ORDER_DETAILS_REF_ORDER" baseTableName="ORDER_DETAILS" baseColumnNames="REF_ORDER" referencedTableName="ORDERS" referencedColumnNames="ID"/>
     </changeSet>
 
 </databaseChangeLog>

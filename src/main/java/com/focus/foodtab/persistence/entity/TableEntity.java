@@ -29,10 +29,10 @@ public class TableEntity implements Serializable
     @Column(name = "ACTIVE")
     private Boolean active;
 
-    @OneToMany(mappedBy = "table", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "tableEntity", cascade = CascadeType.ALL)
     private List<OrderEntity> orders;
 
-    @OneToMany(mappedBy = "table", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "tableEntity", cascade = CascadeType.ALL)
     private List<BillEntity> bills;
 
     public int getId()

@@ -41,7 +41,7 @@ public class OrderDetailsEntity implements Serializable
 
     @ManyToOne
     @JoinColumn(name = "REF_ORDER")
-    private OrderEntity order;
+    private OrderEntity orderEntity;
 
     @OneToOne
     @JoinColumn(name = "REF_MENU_ITEM")
@@ -99,12 +99,12 @@ public class OrderDetailsEntity implements Serializable
 
     public OrderEntity getOrder()
     {
-        return order;
+        return orderEntity;
     }
 
     public void setOrder(OrderEntity order)
     {
-        this.order = order;
+        this.orderEntity = order;
     }
 
     public MenuItemEntity getMenuItem()

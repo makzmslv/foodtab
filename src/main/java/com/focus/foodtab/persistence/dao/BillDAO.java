@@ -7,5 +7,5 @@ import com.focus.foodtab.persistence.entity.OrderEntity;
 
 public interface BillDAO extends JpaRepository<BillEntity, Integer>
 {
-    public BillEntity findByOrder(OrderEntity orderEntity);
+    public BillEntity findByOrderEntity(OrderEntity orderEntity);
 }

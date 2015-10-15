@@ -9,7 +9,7 @@ import com.focus.foodtab.persistence.entity.TableEntity;
 
 public interface OrderDAO extends JpaRepository<OrderEntity, Integer>
 {
-    public OrderEntity findByTableAndStatusNot(TableEntity tableEntity, Integer status);
+    public OrderEntity findByTableEntityAndStatusNot(TableEntity tableEntity, Integer status);
 
-    public List<OrderEntity> findByTableOrderByIdDesc(TableEntity tableEntity);
+    public List<OrderEntity> findByTableEntityOrderByIdDesc(TableEntity tableEntity);
 }

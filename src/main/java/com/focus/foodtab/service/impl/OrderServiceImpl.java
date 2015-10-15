@@ -52,6 +52,10 @@ public class OrderServiceImpl
     public OrderDTO createOrder(OrderCreateDTO createDTO)
     {
         TableEntity tableEntity = validator.getTableEntityFromTableNo(createDTO.getTableNo());
+        if (!tableEntity.getActive())
+        {
+            throw new ServerException(new ErrorMessage(ErrorCodes.TABLE_INACTIVE));
+        }
         checkIfOrderAlreadyInProgressForTable(tableEntity);
         OrderEntity orderEntity = new OrderEntity();
         orderEntity.setStatus(OrderStatus.CREATED.getCode());
@@ -69,26 +73,9 @@ public class OrderServiceImpl
     public OrderDTO updateOrderStatus(Integer orderId, OrderUpdateDTO updateDTO)
     {
         OrderEntity orderEntity = validator.getOrderEntityFromId(orderId);
-        if (OrderStatus.getOrderInProgresStatuses().contains(updateDTO.getStatus()))
-        {
-            throw new ServerException(new ErrorMessage(ErrorCodes.INVALID_ORDER_STATUS));
-        }
-        if (OrderStatus.ORDER_COMPLETED.equals(updateDTO.getStatus()))
-        {
-            List<OrderDetailsEntity> orderItems = orderDetailsDAO.findByOrderAndStatusNotIn(orderEntity, OrderStatus.getOrderInProgresStatuses());
-            if (!orderItems.isEmpty())
-            {
-                throw new ServerException(new ErrorMessage(ErrorCodes.ORDER_IN_PROGRESS));
-            }
-        }
-        if (OrderStatus.getBillGeneratedForOrderStatuses().contains(updateDTO.getStatus()))
-        {
-            BillEntity bill = billDAO.findByOrder(orderEntity);
-            if (bill == null)
-            {
-                throw new ServerException(new ErrorMessage(ErrorCodes.INVALID_ORDER_STATUS));
-            }
-        }
+        checkIfOrderStatusCanBeUpdated(updateDTO, orderEntity);
+        orderEntity.setStatus(updateDTO.getStatus());
+        orderEntity = orderDAO.save(orderEntity);
         return mapper.map(orderEntity, OrderDTO.class);
     }
 
@@ -142,13 +129,13 @@ public class OrderServiceImpl
     public List<OrderDetailsDTO> getOrderItems(Integer orderId)
     {
         OrderEntity orderEntity = validator.getOrderEntityFromId(orderId);
-        List<OrderDetailsEntity> orderItems = orderDetailsDAO.findByOrder(orderEntity);
+        List<OrderDetailsEntity> orderItems = orderDetailsDAO.findByOrderEntity(orderEntity);
         return UtilHelper.mapListOfEnitiesToDTOs(mapper, orderItems, OrderDetailsDTO.class);
     }
 
     private void checkIfOrderAlreadyInProgressForTable(TableEntity tableEntity)
     {
-        OrderEntity orderEntity = orderDAO.findByTableAndStatusNot(tableEntity, OrderStatus.BILL_PAID.getCode());
+        OrderEntity orderEntity = orderDAO.findByTableEntityAndStatusNot(tableEntity, OrderStatus.BILL_PAID.getCode());
         if (orderEntity != null)
         {
             throw new ServerException(new ErrorMessage(ErrorCodes.ORDER_IN_PROGRESS));
@@ -163,13 +150,37 @@ public class OrderServiceImpl
         }
     }
 
+    private void checkIfOrderStatusCanBeUpdated(OrderUpdateDTO updateDTO, OrderEntity orderEntity)
+    {
+        if (OrderStatus.getOrderInProgresStatuses().contains(updateDTO.getStatus()))
+        {
+            throw new ServerException(new ErrorMessage(ErrorCodes.INVALID_ORDER_STATUS));
+        }
+        if (OrderStatus.ORDER_COMPLETED.getCode().equals(updateDTO.getStatus()))
+        {
+            List<OrderDetailsEntity> orderItems = orderDetailsDAO.findByOrderEntityAndStatusNotIn(orderEntity, OrderItemStatus.getOrderInProgresStatuses());
+            if (!orderItems.isEmpty())
+            {
+                throw new ServerException(new ErrorMessage(ErrorCodes.ORDER_IN_PROGRESS));
+            }
+        }
+        if (OrderStatus.getBillGeneratedForOrderStatuses().contains(updateDTO.getStatus()))
+        {
+            BillEntity bill = billDAO.findByOrderEntity(orderEntity);
+            if (bill == null)
+            {
+                throw new ServerException(new ErrorMessage(ErrorCodes.INVALID_ORDER_STATUS));
+            }
+        }
+    }
+
     private void checkIfOrderItemCanBeUpdated(OrderDetailsEntity orderDetailsEntity, Integer orderStatus)
     {
-        if (orderDetailsEntity.getStatus().equals(OrderItemStatus.CANCELLED))
+        if (OrderItemStatus.CANCELLED.getCode().equals(orderDetailsEntity.getStatus()))
         {
             throw new ServerException(new ErrorMessage(ErrorCodes.ORDER_ITEM_CANNOT_UPDATED_AS_ALREADY_CANCELLED));
         }
-        if (orderDetailsEntity.getStatus().equals(OrderItemStatus.DELIVERED))
+        if (OrderItemStatus.DELIVERED.getCode().equals(orderDetailsEntity.getStatus()))
         {
             throw new ServerException(new ErrorMessage(ErrorCodes.ORDER_ITEM_CANNOT_UPDATED_AS_ALREADY_DELIVERED));
         }

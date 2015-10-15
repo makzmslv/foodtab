@@ -54,18 +54,18 @@ public class BillServiceImpl
     public BillDTO getBillForOrder(Integer orderId)
     {
         OrderEntity orderEntity = validator.getOrderEntityFromId(orderId);
-        BillEntity bill = billDAO.findByOrder(orderEntity);
+        BillEntity bill = billDAO.findByOrderEntity(orderEntity);
         return mapper.map(bill, BillDTO.class);
     }
 
     public BillDTO recalculateBill(Integer orderId)
     {
         OrderEntity orderEntity = validator.getOrderEntityFromId(orderId);
-        if (OrderStatus.ORDER_COMPLETED.equals(orderEntity.getStatus()))
+        if (OrderStatus.ORDER_COMPLETED.getCode().equals(orderEntity.getStatus()))
         {
             throw new ServerException(new ErrorMessage(ErrorCodes.INVALID_ORDER_STATUS));
         }
-        BillEntity bill = billDAO.findByOrder(orderEntity);
+        BillEntity bill = billDAO.findByOrderEntity(orderEntity);
         prepareBillEntity(bill);
         bill = billDAO.save(bill);
         orderEntity.setStatus(OrderStatus.BILL_GENERATED.getCode());
@@ -74,7 +74,7 @@ public class BillServiceImpl
 
     private void validateInput(OrderEntity orderEntity)
     {
-        if (!OrderStatus.ORDER_COMPLETED.equals(orderEntity.getStatus()))
+        if (!OrderStatus.ORDER_COMPLETED.getCode().equals(orderEntity.getStatus()))
         {
             throw new ServerException(new ErrorMessage(ErrorCodes.INVALID_ORDER_STATUS));
         }
@@ -91,10 +91,10 @@ public class BillServiceImpl
         for (OrderDetailsEntity orderItem : orderItems)
         {
             BigDecimal costOfItem = new BigDecimal(orderItem.getCostOfItem());
-            billAmount.add(costOfItem);
+            billAmount = billAmount.add(costOfItem);
         }
         String taxValue = parameterDAO.findByKey(ParameterKeys.TAX.getKey()).getValue();
-        BigDecimal taxToApply = new BigDecimal(taxValue).divide(BigDecimal.TEN);
+        BigDecimal taxToApply = new BigDecimal(taxValue).divide(new BigDecimal(100));
         BigDecimal taxAmount = billAmount.multiply(taxToApply);
         BigDecimal totalAmount = billAmount.add(taxAmount);
         bill.setBillAmount(billAmount);

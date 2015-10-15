@@ -23,7 +23,7 @@ import com.wordnik.swagger.annotations.Api;
 
 @Api(value = "orders", description = "orders")
 @Controller
-@RequestMapping(value = "/tables/{tableId}/orders")
+@RequestMapping(value = "/tables/{tableNo}/orders")
 public class OrderController
 {
     @Autowired
@@ -31,42 +31,42 @@ public class OrderController
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public OrderDTO createOrder(@RequestBody OrderCreateDTO createDTO)
+    public OrderDTO createOrder(@PathVariable Integer tableNo, @RequestBody OrderCreateDTO createDTO)
     {
         return orderService.createOrder(createDTO);
     }
 
     @RequestMapping(value = "/{orderId}", method = RequestMethod.GET)
     @ResponseBody
-    public OrderDTO getOrder(@PathVariable Integer orderId)
+    public OrderDTO getOrder(@PathVariable Integer tableNo, @PathVariable Integer orderId)
     {
         return orderService.getOrder(orderId);
     }
 
     @RequestMapping(value = "/{orderId}/orderDetails", method = RequestMethod.GET)
     @ResponseBody
-    public List<OrderDetailsDTO> getOrderItems(Integer orderId)
+    public List<OrderDetailsDTO> getOrderItems(@PathVariable Integer tableNo, Integer orderId)
     {
         return orderService.getOrderItems(orderId);
     }
 
     @RequestMapping(value = "/{orderId}/orderDetails", method = RequestMethod.POST)
     @ResponseBody
-    public List<OrderDetailsDTO> addMenuItemsToOrder(@PathVariable Integer orderId, @Valid @RequestBody List<OrderDetailsCreateDTO> orderDetailscreateDTO)
+    public List<OrderDetailsDTO> addMenuItemsToOrder(@PathVariable Integer tableNo, @PathVariable Integer orderId, @Valid @RequestBody List<OrderDetailsCreateDTO> orderDetailscreateDTO)
     {
         return orderService.addMenuItemsToOrder(orderId, orderDetailscreateDTO);
     }
 
     @RequestMapping(value = "/{orderId}/orderDetails", method = RequestMethod.PUT)
     @ResponseBody
-    public List<OrderDetailsDTO> updateOrderItems(Integer orderId, List<OrderDetailsUpdateDTO> orderDetailsUpdateDTO)
+    public List<OrderDetailsDTO> updateOrderItems(@PathVariable Integer tableNo, @PathVariable Integer orderId, @Valid @RequestBody List<OrderDetailsUpdateDTO> orderDetailsUpdateDTO)
     {
         return orderService.updateOrderItems(orderId, orderDetailsUpdateDTO);
     }
 
     @RequestMapping(value = "/{orderId}", method = RequestMethod.PUT)
     @ResponseBody
-    public OrderDTO updateOrderStatus(@PathVariable Integer orderId, @Valid @RequestBody OrderUpdateDTO updateDTO)
+    public OrderDTO updateOrderStatus(@PathVariable Integer tableNo, @PathVariable Integer orderId, @Valid @RequestBody OrderUpdateDTO updateDTO)
     {
         return orderService.updateOrderStatus(orderId, updateDTO);
     }

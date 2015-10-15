@@ -16,7 +16,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ORDER")
+@Table(name = "ORDERS")
 public class OrderEntity implements Serializable
 {
     private static final long serialVersionUID = 1L;
@@ -31,12 +31,12 @@ public class OrderEntity implements Serializable
 
     @ManyToOne
     @JoinColumn(name = "REF_TABLE")
-    private TableEntity table;
+    private TableEntity tableEntity;
 
-    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "orderEntity", cascade = CascadeType.ALL)
     private BillEntity bill;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "orderEntity", cascade = CascadeType.ALL)
     private List<OrderDetailsEntity> orderDetails;
 
     public int getId()
@@ -61,12 +61,12 @@ public class OrderEntity implements Serializable
 
     public TableEntity getTable()
     {
-        return table;
+        return tableEntity;
     }
 
     public void setTable(TableEntity table)
     {
-        this.table = table;
+        this.tableEntity = table;
     }
 
     public List<OrderDetailsEntity> getOrderDetails()
